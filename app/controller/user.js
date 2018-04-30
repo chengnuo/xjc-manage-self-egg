@@ -8,7 +8,7 @@ class TestController extends Controller {
    * 需求：用户登录
    * 版本号：v1.0.0
    * 思路：获取客户端用户名，返回数据库{用户名, 密码}，服务端密码和客户端密码进行校验。
-   * @returns {Promise.<void>}
+   * {Promise.<void>}
    */
   async signIn() {
     const requestBody = this.ctx.request.body;
