@@ -1,0 +1,1 @@
+# xjc-manage-self-egg
