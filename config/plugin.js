@@ -8,3 +8,8 @@ module.exports.passport = {
   enable: true,
   package: 'egg-passport',
 };
+// 数据库配置
+exports.mysql = {
+  enable: true,
+  package: 'egg-mysql',
+};
