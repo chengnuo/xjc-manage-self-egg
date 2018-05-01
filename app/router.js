@@ -5,7 +5,10 @@
  */
 module.exports = app => {
   const { router, controller } = app;
+  // const localStrategy = app.passport.authenticate('local');
   router.get('/', controller.home.index);
-  router.post('/api/signIn', controller.user.signIn); // 登录
-  router.post('/signOut', controller.user.signOut); // 登出
+  // 鉴权
+  const localStrategy = app.passport.authenticate('local');
+  router.get('/api/signIn', controller.user.signIn); // 登入
+  router.post('/api/signIn', localStrategy); // 登入
 };

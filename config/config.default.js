@@ -19,6 +19,14 @@ module.exports = appInfo => {
       enable: false,
     },
   };
+  /**
+   * 设置鉴权
+   * @type {{usernameField: string, passwordField: string}}
+   */
+  // config.passportLocal = {
+  //   usernameField: 'username',
+  //   passwordField: 'password',
+  // };
 
   // 单数据库信息配置
   config.mysql = {
