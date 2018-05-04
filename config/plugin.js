@@ -19,3 +19,8 @@ exports.mysql = {
   enable: true,
   package: 'egg-mysql',
 };
+// {app_root}/config/plugin.js prefix https://github.com/eggjs/egg-router-plus
+exports.routerPlus = {
+  enable: true,
+  package: 'egg-router-plus',
+};

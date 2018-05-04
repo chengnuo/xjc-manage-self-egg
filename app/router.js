@@ -9,6 +9,8 @@ module.exports = app => {
   router.get('/', controller.home.index);
   // 鉴权
   const localStrategy = app.passport.authenticate('local');
-  router.get('/api/signIn', controller.user.signIn); // 登入
-  router.post('/api/signIn', localStrategy); // 登入
+
+  const apiRouter = app.router.namespace('/api');
+  apiRouter.get('/signIn', controller.user.signIn); // 登入
+  apiRouter.post('/signIn', localStrategy); // 登入
 };
