@@ -6,6 +6,7 @@ class HomeController extends Controller {
   async index() {
     this.ctx.body = {
       status: 200,
+      message: '首页',
     };
   }
 }
