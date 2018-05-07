@@ -75,12 +75,18 @@ class TestController extends Controller {
    * 需求：用户登出
    * 版本号：v1.0.0
    */
-  signOut() {
-    const response = {
-      message: '登出成功',
-      status: 200,
-    };
-    this.ctx.body = response;
+  // signOut() {
+  //   const response = {
+  //     message: '登出成功',
+  //     status: 200,
+  //   };
+  //   this.ctx.body = response;
+  // }
+  async signOut() {
+    const ctx = this.ctx;
+
+    ctx.logout();
+    ctx.redirect(ctx.get('referer') || '/');
   }
 }
 

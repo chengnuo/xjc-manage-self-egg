@@ -33,29 +33,37 @@ module.exports = app => {
     // if (user.username === 'admin' && user.password === '888888') {
     //   return user;
     // }
+
     const userInfo = await ctx.service.user.find({
       username: user.username,
       password: md5(user.password),
     });
-    console.log('userInfo',userInfo)
     if (userInfo) {
       return userInfo;
     }
 
-    return null;
+
+    // console.log('verifyuser',user);
+    // console.log('userInfo',userInfo);
+    console.log('userInfo',userInfo);
+
+    // console.log('userInfo.password === md5(user.password)',userInfo.password === md5(user.password))
+    // console.log('ctx',ctx);
+
+    // return null;
 
     // return true;
   });
   // 将用户信息序列化后存进 session 里面，一般需要精简，只保存个别字段
   app.passport.serializeUser(async (ctx, user) => {
-    const auth_token = user.username + '$$$$'; // 以后可能会存储更多信息，用 $$$$ 来分隔
-    const opts = {
-      path: '/',
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-      signed: true,
-      httpOnly: true,
-    };
-    ctx.cookies.set(app.config.auth_cookie_name, auth_token, opts);
+    // const auth_token = user.username + '$$$$'; // 以后可能会存储更多信息，用 $$$$ 来分隔
+    // const opts = {
+    //   path: '/',
+    //   maxAge: 1000 * 60 * 60 * 24 * 30,
+    //   signed: true,
+    //   httpOnly: true,
+    // };
+    // ctx.cookies.set(app.config.auth_cookie_name, auth_token, opts);
     console.log('serializeUser', user);
     return user;
   });
