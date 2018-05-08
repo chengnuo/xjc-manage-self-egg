@@ -48,27 +48,43 @@ class TestController extends Controller {
     const ctx = this.ctx;
 
     if (ctx.isAuthenticated()) {
-      ctx.body = `<div>
-        <h2>${ctx.path}</h2>
-        <hr>
-        Logined user: <img src="${ctx.user.photo}"> ${ctx.user.displayName} / ${ctx.user.id} | <a href="/logout">Logout</a>
-        <pre><code>${JSON.stringify(ctx.user, null, 2)}</code></pre>
-        <hr>
-        <a href="/">Home</a> | <a href="/user">User</a>
-      </div>`;
+      // ctx.body = `<div>
+      //   <h2>${ctx.path}</h2>
+      //   <hr>
+      //   Logined user: <img src="${ctx.user.photo}"> ${ctx.user.displayName} / ${ctx.user.id} | <a href="/logout">Logout</a>
+      //   <pre><code>${JSON.stringify(ctx.user, null, 2)}</code></pre>
+      //   <hr>
+      //   <a href="/">Home</a> | <a href="/user">User</a>
+      // </div>`;
+      if (ctx.user.err) { // 登录失败逻辑判断
+        ctx.body = {
+          status: ctx.user.status,
+          message: ctx.user.message,
+        };
+      } else { // 正常返回信息
+        ctx.body = {
+          status: 200,
+          message: '登录成功',
+        };
+      }
+
     } else {
       ctx.session.returnTo = ctx.path;
-      ctx.body = `
-        <div>
-          <h2>${ctx.path}</h2>
-          <hr>
-          Login with
-          <a href="/passport/weibo">Weibo</a> | <a href="/passport/github">Github</a> |
-          <a href="/passport/bitbucket">Bitbucket</a> | <a href="/passport/twitter">Twitter</a>
-          <hr>
-          <a href="/">Home</a> | <a href="/user">User</a>
-        </div>
-      `;
+      // ctx.body = `
+      //   <div>
+      //     <h2>${ctx.path}</h2>
+      //     <hr>
+      //     Login with
+      //     <a href="/passport/weibo">Weibo</a> | <a href="/passport/github">Github</a> |
+      //     <a href="/passport/bitbucket">Bitbucket</a> | <a href="/passport/twitter">Twitter</a>
+      //     <hr>
+      //     <a href="/">Home</a> | <a href="/user">User</a>
+      //   </div>
+      // `;
+      ctx.body = {
+        status: 401,
+        message: '没有权限,请联系管理员',
+      };
     }
   }
   /**
@@ -86,7 +102,11 @@ class TestController extends Controller {
     const ctx = this.ctx;
 
     ctx.logout();
-    ctx.redirect(ctx.get('referer') || '/');
+    // ctx.redirect(ctx.get('referer') || '/api/signIn');
+    ctx.body = {
+      status: 200,
+      message: '退出登录成功',
+    };
   }
 }
 

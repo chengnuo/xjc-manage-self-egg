@@ -7,7 +7,7 @@ module.exports = app => {
   const { router, controller } = app;
   router.get('/', controller.home.index);
   const localStrategy = app.passport.authenticate('local', { // 鉴权
-    successRedirect: '/',
+    successRedirect: '/api/signIn',
     failureRedirect: '/notAuthorized',
   });
   const apiRouter = app.router.namespace('/api');

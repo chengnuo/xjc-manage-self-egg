@@ -11,6 +11,7 @@ const localHandler = async (ctx, user) => {
     return userInfo;
   }
   return {
+    err: '判断错误逻辑',
     status: 10001,
     message: '密码错误',
   };
