@@ -3,18 +3,52 @@ const LocalStrategy = require('passport-local').Strategy;
 const md5 = require('md5');
 console.log('hahahahahha');
 const localHandler = async (ctx, user) => {
-  const userInfo = await ctx.service.user.find({
-    username: user.username,
-    password: md5(user.password),
-  });
-  if (userInfo) {
-    return userInfo;
+  let username = user.username;
+  let password = user.password;
+
+  console.log('username',username)
+
+  if(!username){
+    return {
+      err: '判断错误逻辑',
+      status: 10001,
+      message: '请输入用户名',
+    };
+  }else{
+    const userNameInfo = await ctx.service.user.find({
+      username: user.username,
+      // password: md5(user.password),
+    });
+    // if (userInfo) {
+    //   return userInfo;
+    // }
+
+    if (!userNameInfo) {
+      return {
+        err: '判断错误逻辑',
+        status: 10001,
+        message: '用户名不存在',
+      };
+    }
+    const userInfo = await ctx.service.user.find({
+      username: user.username,
+      password: md5(user.password),
+    });
+    if (userInfo && (userInfo.password === md5(user.password))) {
+      return {
+        status: 200,
+        message: '登录成功',
+      };
+    }
+    return {
+      err: '判断错误逻辑',
+      status: 10001,
+      message: '密码错误',
+    };
   }
-  return {
-    err: '判断错误逻辑',
-    status: 10001,
-    message: '密码错误',
-  };
+
+
+
 
 };
 module.exports = app => {

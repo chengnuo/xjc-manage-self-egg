@@ -5,8 +5,8 @@ const Controller = require('egg').Controller;
 class NotAuthorized extends Controller {
   async index() {
     this.ctx.body = {
-      status: 401,
-      message: '没有权限,请联系管理员',
+      status: 10001,
+      message: '请输入账号密码',
     };
   }
 }

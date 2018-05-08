@@ -82,8 +82,8 @@ class TestController extends Controller {
       //   </div>
       // `;
       ctx.body = {
-        status: 401,
-        message: '没有权限,请联系管理员',
+        status: 402,
+        message: '参数错误',
       };
     }
   }
