@@ -2,6 +2,20 @@
 const LocalStrategy = require('passport-local').Strategy;
 const md5 = require('md5');
 console.log('hahahahahha');
+const localHandler = async (ctx, user) => {
+  const userInfo = await ctx.service.user.find({
+    username: user.username,
+    password: md5(user.password),
+  });
+  if (userInfo) {
+    return userInfo;
+  }
+  return {
+    status: 10001,
+    message: '密码错误',
+  };
+
+};
 module.exports = app => {
   // 挂载 strategy
   app.passport.use(new LocalStrategy({
@@ -34,25 +48,21 @@ module.exports = app => {
     //   return user;
     // }
 
-    const userInfo = await ctx.service.user.find({
-      username: user.username,
-      password: md5(user.password),
-    });
-    if (userInfo) {
-      return userInfo;
+    // const userInfo = await ctx.service.user.find({
+    //   username: user.username,
+    //   password: md5(user.password),
+    // });
+    // console.log('userInfo',userInfo)
+    // if (userInfo) {
+    //   return userInfo;
+    // }
+
+    const existUser = await localHandler(ctx, user);
+    console.log('existUser', existUser);
+    if (existUser) {
+      return existUser;
     }
 
-
-    // console.log('verifyuser',user);
-    // console.log('userInfo',userInfo);
-    console.log('userInfo',userInfo);
-
-    // console.log('userInfo.password === md5(user.password)',userInfo.password === md5(user.password))
-    // console.log('ctx',ctx);
-
-    // return null;
-
-    // return true;
   });
   // 将用户信息序列化后存进 session 里面，一般需要精简，只保存个别字段
   app.passport.serializeUser(async (ctx, user) => {
