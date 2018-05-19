@@ -11,8 +11,8 @@ module.exports = app => {
     failureRedirect: '/notAuthorized',
   });
   const apiRouter = app.router.namespace('/api');
-  apiRouter.get('/signIn', controller.user.signIn); // 登入
+  apiRouter.get('/signIn', controller.login.signIn); // 登入
   apiRouter.post('/signIn', localStrategy); // 登入
-  apiRouter.get('/signOut', controller.user.signOut); // 登出
+  apiRouter.get('/signOut', controller.login.signOut); // 登出
   router.get('/notAuthorized', controller.notAuthorized.index); // 权限
 };

@@ -15,7 +15,7 @@ const localHandler = async (ctx, user) => {
       message: '请输入用户名',
     };
   }else{
-    const userNameInfo = await ctx.service.user.find({
+    const userNameInfo = await ctx.service.login.find({
       username: user.username,
       // password: md5(user.password),
     });
@@ -30,7 +30,7 @@ const localHandler = async (ctx, user) => {
         message: '用户名不存在',
       };
     }
-    const userInfo = await ctx.service.user.find({
+    const userInfo = await ctx.service.login.find({
       username: user.username,
       password: md5(user.password),
     });
