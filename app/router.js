@@ -12,7 +12,9 @@ module.exports = app => {
   });
   const apiRouter = app.router.namespace('/api');
   apiRouter.get('/signIn', controller.login.signIn); // 登入
-  apiRouter.post('/signIn', localStrategy); // 登入
+  apiRouter.post('/signIn', localStrategy);
   apiRouter.get('/signOut', controller.login.signOut); // 登出
   router.get('/notAuthorized', controller.notAuthorized.index); // 权限
+
+  apiRouter.get('/user', controller.user.index); // 用户模块
 };
