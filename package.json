@@ -10,6 +10,7 @@
     "egg-passport-local": "^1.2.1",
     "egg-router-plus": "^1.2.0",
     "egg-scripts": "^2.5.0",
+    "egg-validate": "^1.0.0",
     "md5": "^2.2.1",
     "passport-local": "^1.0.0"
   },

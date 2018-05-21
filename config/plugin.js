@@ -24,3 +24,9 @@ exports.routerPlus = {
   enable: true,
   package: 'egg-router-plus',
 };
+
+// 校验
+exports.validate = {
+  enable: true,
+  package: 'egg-validate',
+};

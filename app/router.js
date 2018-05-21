@@ -16,5 +16,8 @@ module.exports = app => {
   apiRouter.get('/signOut', controller.login.signOut); // 登出
   router.get('/notAuthorized', controller.notAuthorized.index); // 权限
 
-  apiRouter.get('/user', controller.user.index); // 用户模块
+  // apiRouter.get('/user', controller.user.index); // 用户模块
+
+  // user模块 restful
+  app.router.resources('users', '/api/users', app.controller.users);
 };
