@@ -18,15 +18,15 @@ class TopicService extends Service {
   }
 
   async show(params) {
-    const result = await this.request(`/topic/${params.id}`, {
-      data: {
-        mdrender: params.mdrender,
-        accesstoken: params.accesstoken,
-      },
-    });
-    this.checkSuccess(result);
-
-    return result.data.data;
+    // const result = await this.request(`/topic/${params.id}`, {
+    //   data: {
+    //     mdrender: params.mdrender,
+    //     accesstoken: params.accesstoken,
+    //   },
+    // });
+    // this.checkSuccess(result);
+    //
+    // return result.data.data;
   }
 
   async list(params) {
@@ -36,9 +36,10 @@ class TopicService extends Service {
     //
     // this.checkSuccess(result);
     // return result.data.data;
-    let user = this.app.mysql.select('user', params);
-    console.log('user',user)
-    return user;
+
+    const result = this.app.mysql.select('user', params);
+    // this.checkSuccess(result);
+    return result;
   }
 
   async create(params) {

@@ -41,7 +41,16 @@ class TopicsController extends Controller {
     // });
 
     const result = await ctx.service.users.list({
-      columns: ['id', 'name', 'email', 'is_admin', 'status', 'updated_time', 'created_time', 'username'],
+      columns: [
+        'id',
+        'name',
+        'email',
+        'is_admin',
+        'status',
+        'updated_time',
+        'created_time',
+        'username',
+      ],
     });
     ctx.body = {
       status: 200,
