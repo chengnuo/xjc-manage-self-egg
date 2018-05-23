@@ -30,12 +30,15 @@ class TopicService extends Service {
   }
 
   async list(params) {
-    const result = await this.request('/topics', {
-      data: params,
-    });
-
-    this.checkSuccess(result);
-    return result.data.data;
+    // const result = await this.request('/topics', {
+    //   data: params,
+    // });
+    //
+    // this.checkSuccess(result);
+    // return result.data.data;
+    let user = this.app.mysql.select('user', params);
+    console.log('user',user)
+    return user;
   }
 
   async create(params) {

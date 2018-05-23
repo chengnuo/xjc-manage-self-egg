@@ -27,18 +27,28 @@ class TopicsController extends Controller {
   async index() {
     const { ctx } = this;
 
-    ctx.validate({
-      page: { type: 'string', format: /\d+/, required: false },
-      tab: { type: 'enum', values: [ 'ask', 'share', 'job', 'good' ], required: false },
-      limit: { type: 'string', format: /\d+/, required: false },
-    }, ctx.query);
+    // ctx.validate({
+    //   page: { type: 'string', format: /\d+/, required: false },
+    //   tab: { type: 'enum', values: [ 'ask', 'share', 'job', 'good' ], required: false },
+    //   limit: { type: 'string', format: /\d+/, required: false },
+    // }, ctx.query);
+    //
+    // ctx.body = await ctx.service.users.list({
+    //   page: ctx.query.page,
+    //   tab: ctx.query.tab,
+    //   limit: ctx.query.limit,
+    //   mdrender: ctx.query.mdrender !== 'false',
+    // });
 
-    ctx.body = await ctx.service.users.list({
-      page: ctx.query.page,
-      tab: ctx.query.tab,
-      limit: ctx.query.limit,
-      mdrender: ctx.query.mdrender !== 'false',
+    const result = await ctx.service.users.list({
+      columns: ['id', 'name', 'email', 'is_admin', 'status', 'updated_time', 'created_time', 'username'],
     });
+    ctx.body = {
+      status: 200,
+      message: '获取列表',
+      data: result,
+    };
+
   }
 
   async create() {
