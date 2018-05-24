@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="13755160-0625-4685-9361-7d919730c50d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/users.js" afterPath="$PROJECT_DIR$/app/controller/users.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/service/users.js" afterPath="$PROJECT_DIR$/app/service/users.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,8 +20,8 @@
       <file leaf-file-name="users.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controller/users.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="77" column="19" lean-forward="false" selection-start-line="77" selection-start-column="19" selection-end-line="77" selection-end-column="19" />
+            <state relative-caret-position="446">
+              <caret line="115" column="23" lean-forward="false" selection-start-line="115" selection-start-column="23" selection-end-line="115" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -29,8 +30,8 @@
       <file leaf-file-name="users.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/service/users.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="52" column="35" lean-forward="false" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
+            <state relative-caret-position="196">
+              <caret line="57" column="21" lean-forward="false" selection-start-line="57" selection-start-column="15" selection-end-line="57" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -297,12 +298,12 @@
       <workItem from="1526968250280" duration="7000" />
       <workItem from="1526978112644" duration="749000" />
       <workItem from="1527035843010" duration="398000" />
-      <workItem from="1527055612972" duration="8753000" />
+      <workItem from="1527055612972" duration="10138000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37522000" />
+    <option name="totallyTimeSpent" value="38907000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="973" extended-state="6" />
@@ -687,16 +688,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/service/users.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="52" column="35" lean-forward="false" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
+        <state relative-caret-position="196">
+          <caret line="57" column="21" lean-forward="false" selection-start-line="57" selection-start-column="15" selection-end-line="57" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controller/users.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="77" column="19" lean-forward="false" selection-start-line="77" selection-start-column="19" selection-end-line="77" selection-end-column="19" />
+        <state relative-caret-position="446">
+          <caret line="115" column="23" lean-forward="false" selection-start-line="115" selection-start-column="23" selection-end-line="115" selection-end-column="23" />
           <folding />
         </state>
       </provider>

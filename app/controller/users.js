@@ -89,12 +89,34 @@ class TopicsController extends Controller {
   }
 
   async update() {
+    // const { ctx } = this;
+    // const id = ctx.params.id;
+    //
+    // ctx.validate(this.createRule);
+    // await ctx.service.users.update(Object.assign({ id }, ctx.request.body));
+    // ctx.status = 204;
+
     const { ctx } = this;
     const id = ctx.params.id;
+    const result =  await ctx.service.users.update(Object.assign({ id }, ctx.request.body));
 
-    ctx.validate(this.createRule);
-    await ctx.service.users.update(Object.assign({ id }, ctx.request.body));
-    ctx.status = 204;
+    console.log('result',result)
+
+    if(result.affectedRows === 1){
+      ctx.body = {
+        status: 200,
+        message: '用户-编辑成功',
+        data: {
+          id: id,
+        },
+      };
+    }else{
+      ctx.body = {
+        status: 201,
+        message: '用户-编辑失败',
+      };
+    }
+
   }
 }
 
