@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="13755160-0625-4685-9361-7d919730c50d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/users.js" afterPath="$PROJECT_DIR$/app/controller/users.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/service/users.js" afterPath="$PROJECT_DIR$/app/service/users.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,8 +19,8 @@
       <file leaf-file-name="users.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controller/users.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="152" column="12" lean-forward="false" selection-start-line="152" selection-start-column="12" selection-end-line="152" selection-end-column="12" />
+            <state relative-caret-position="290">
+              <caret line="103" column="20" lean-forward="true" selection-start-line="103" selection-start-column="20" selection-end-line="103" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -68,6 +67,7 @@
       <find>destroy</find>
       <find>===</find>
       <find>ctx.params.id</find>
+      <find>username</find>
     </findStrings>
     <replaceStrings>
       <replace>ctx.service.users</replace>
@@ -291,12 +291,12 @@
       <workItem from="1526968250280" duration="7000" />
       <workItem from="1526978112644" duration="749000" />
       <workItem from="1527035843010" duration="398000" />
-      <workItem from="1527055612972" duration="11799000" />
+      <workItem from="1527055612972" duration="12136000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40568000" />
+    <option name="totallyTimeSpent" value="40905000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="973" extended-state="6" />
@@ -689,8 +689,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controller/users.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="152" column="12" lean-forward="false" selection-start-line="152" selection-start-column="12" selection-end-line="152" selection-end-column="12" />
+        <state relative-caret-position="290">
+          <caret line="103" column="20" lean-forward="true" selection-start-line="103" selection-start-column="20" selection-end-line="103" selection-end-column="20" />
           <folding />
         </state>
       </provider>
