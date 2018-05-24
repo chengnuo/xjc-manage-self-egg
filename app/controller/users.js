@@ -1,3 +1,13 @@
+/**
+ * Method	Path	Route Name	Controller.Action
+ * GET	/posts	posts	app.controllers.posts.index
+ * GET	/posts/new	new_post	app.controllers.posts.new
+ * GET	/posts/:id	post	app.controllers.posts.show
+ * GET	/posts/:id/edit	edit_post	app.controllers.posts.edit
+ * POST	/posts	posts	app.controllers.posts.create
+ * PUT	/posts/:id	post	app.controllers.posts.update
+ * DELETE	/posts/:id	post	app.controllers.posts.destroy
+ */
 'use strict';
 
 const Controller = require('egg').Controller;
@@ -126,6 +136,29 @@ class TopicsController extends Controller {
       };
     }
 
+  }
+
+
+  async destroy(){
+    const { ctx } = this;
+    const id = ctx.params.id;
+    const result = await ctx.service.users.destroy({
+      id,
+    });
+    if(result.affectedRows === 1){
+      ctx.body = {
+        status: 200,
+        message: '用户-删除成功',
+        data: {
+          id,
+        },
+      };
+    }else{
+      ctx.body = {
+        status: 201,
+        message: '用户-删除失败',
+      };
+    }
   }
 }
 

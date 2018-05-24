@@ -72,6 +72,14 @@ class TopicService extends Service {
     return result
   }
 
+
+  async destroy(params){
+    const result = await this.app.mysql.delete('user', {
+      id: params.id,
+    });
+    return result;
+  }
+
   checkSuccess(result) {
     if (result.status !== 200) {
       const errorMsg = result.data && result.data.error_msg ? result.data.error_msg : 'unknown error';
