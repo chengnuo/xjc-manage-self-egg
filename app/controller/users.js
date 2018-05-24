@@ -15,13 +15,22 @@ class TopicsController extends Controller {
   }
 
   async show() {
+    // const { ctx } = this;
+    //
+    // ctx.body = await ctx.service.users.show({
+    //   id: ctx.params.id,
+    //   mdrender: ctx.query.mdrender !== 'false',
+    //   accesstoken: ctx.query.accesstoken || '',
+    // });
     const { ctx } = this;
-
-    ctx.body = await ctx.service.users.show({
+    const result = await ctx.service.users.show({
       id: ctx.params.id,
-      mdrender: ctx.query.mdrender !== 'false',
-      accesstoken: ctx.query.accesstoken || '',
     });
+    ctx.body = {
+      status: 200,
+      message: '用户-详情',
+      data: result,
+    };
   }
 
   async index() {

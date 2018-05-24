@@ -27,6 +27,11 @@ class TopicService extends Service {
     // this.checkSuccess(result);
     //
     // return result.data.data;
+
+    const result = await this.app.mysql.get('user', { id: params.id });
+
+    return result;
+
   }
 
   async list(params) {
