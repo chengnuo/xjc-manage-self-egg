@@ -43,14 +43,16 @@ class TopicService extends Service {
   }
 
   async create(params) {
-    const result = await this.request('/topics', {
-      method: 'post',
-      data: params,
-      contentType: 'json',
-    });
-
-    this.checkSuccess(result);
-    return result.data.topic_id;
+    // const result = await this.request('/topics', {
+    //   method: 'post',
+    //   data: params,
+    //   contentType: 'json',
+    // });
+    //
+    // this.checkSuccess(result);
+    // return result.data.topic_id;
+    const result = await this.app.mysql.insert('user', params);
+    return result;
   }
 
   async update(params) {

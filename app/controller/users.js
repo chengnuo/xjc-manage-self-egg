@@ -61,14 +61,31 @@ class TopicsController extends Controller {
   }
 
   async create() {
-    const { ctx } = this;
-    ctx.validate(this.createRule);
+    // const { ctx } = this;
+    // ctx.validate(this.createRule);
+    //
+    // const id = await ctx.service.users.create(ctx.request.body);
+    // ctx.body = {
+    //   topic_id: id,
+    // };
+    // ctx.status = 201;
 
-    const id = await ctx.service.users.create(ctx.request.body);
-    ctx.body = {
-      topic_id: id,
-    };
-    ctx.status = 201;
+
+    const { ctx } = this;
+    const result = await this.app.mysql.get('user', { username: ctx.request.body.username });
+    if (result.username === ctx.request.body.username) {
+      ctx.body = {
+        status: 200,
+        message: '用户名已存在，请使用其他用户名',
+      };
+    } else {
+      const id = await ctx.service.users.create(ctx.request.body);
+      ctx.body = {
+        status: 200,
+        message: '用户-新增',
+        data: id,
+      };
+    }
   }
 
   async update() {
