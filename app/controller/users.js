@@ -75,7 +75,7 @@ class TopicsController extends Controller {
     const result = await this.app.mysql.get('user', { username: ctx.request.body.username });
     if (result.username === ctx.request.body.username) {
       ctx.body = {
-        status: 200,
+        status: 201,
         message: '用户名已存在，请使用其他用户名',
       };
     } else {
