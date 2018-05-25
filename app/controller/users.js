@@ -30,11 +30,19 @@ class TopicsController extends Controller {
     const result = await ctx.service.users.show({
       id: ctx.params.id,
     });
-    ctx.body = {
-      status: 200,
-      message: '用户-详情',
-      data: result,
-    };
+
+    if (result) {
+      ctx.body = {
+        status: 200,
+        message: '用户-详情',
+        data: result,
+      };
+    } else {
+      ctx.body = {
+        status: 500,
+        message: '用户-详情不存在',
+      };
+    }
   }
 
   // 列表
@@ -52,11 +60,20 @@ class TopicsController extends Controller {
         'username',
       ],
     });
-    ctx.body = {
-      status: 200,
-      message: '获取列表',
-      data: result,
-    };
+
+    if (result) {
+      ctx.body = {
+        status: 200,
+        message: '获取列表',
+        data: result,
+      };
+    } else {
+      ctx.body = {
+        status: 201,
+        message: '用户-列表不存在',
+      };
+    }
+
 
   }
 
@@ -64,7 +81,7 @@ class TopicsController extends Controller {
   async create() {
     const { ctx } = this;
     const result = await this.app.mysql.get('user', { username: ctx.request.body.username });
-    console.log('result',result)
+    console.log('result', result);
     if (result && result.username === ctx.request.body.username) {
       ctx.body = {
         status: 201,
@@ -84,19 +101,19 @@ class TopicsController extends Controller {
   async update() {
     const { ctx } = this;
     const id = ctx.params.id;
-    const result =  await ctx.service.users.update(Object.assign({ id }, ctx.request.body));
+    const result = await ctx.service.users.update(Object.assign({ id }, ctx.request.body));
 
-    console.log('result',result)
+    console.log('result', result);
 
-    if(result.affectedRows === 1){
+    if (result.affectedRows === 1) {
       ctx.body = {
         status: 200,
         message: '用户-编辑成功',
         data: {
-          id: id,
+          id,
         },
       };
-    }else{
+    } else {
       ctx.body = {
         status: 201,
         message: '用户-编辑失败',
@@ -106,13 +123,13 @@ class TopicsController extends Controller {
   }
 
   // 删除
-  async destroy(){
+  async destroy() {
     const { ctx } = this;
     const id = ctx.params.id;
     const result = await ctx.service.users.destroy({
       id,
     });
-    if(result.affectedRows === 1){
+    if (result.affectedRows === 1) {
       ctx.body = {
         status: 200,
         message: '用户-删除成功',
@@ -120,7 +137,7 @@ class TopicsController extends Controller {
           id,
         },
       };
-    }else{
+    } else {
       ctx.body = {
         status: 201,
         message: '用户-删除失败',

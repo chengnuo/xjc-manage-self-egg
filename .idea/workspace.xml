@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="13755160-0625-4685-9361-7d919730c50d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/users.js" afterPath="$PROJECT_DIR$/app/controller/users.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/service/users.js" afterPath="$PROJECT_DIR$/app/service/users.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,8 +19,8 @@
       <file leaf-file-name="users.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controller/users.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1015">
-              <caret line="107" column="7" lean-forward="false" selection-start-line="107" selection-start-column="7" selection-end-line="107" selection-end-column="7" />
+            <state relative-caret-position="-417">
+              <caret line="66" column="24" lean-forward="true" selection-start-line="66" selection-start-column="24" selection-end-line="66" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -30,8 +29,8 @@
       <file leaf-file-name="users.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/service/users.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="45" column="7" lean-forward="false" selection-start-line="45" selection-start-column="7" selection-end-line="45" selection-end-column="7" />
+            <state relative-caret-position="185">
+              <caret line="29" column="24" lean-forward="false" selection-start-line="29" selection-start-column="12" selection-end-line="29" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -64,11 +63,11 @@
       <find>userInfo</find>
       <find>map</find>
       <find>create</find>
-      <find>checkSuccess</find>
       <find>destroy</find>
       <find>===</find>
       <find>ctx.params.id</find>
       <find>username</find>
+      <find>checkSuccess</find>
     </findStrings>
     <replaceStrings>
       <replace>ctx.service.users</replace>
@@ -292,12 +291,12 @@
       <workItem from="1526968250280" duration="7000" />
       <workItem from="1526978112644" duration="749000" />
       <workItem from="1527035843010" duration="398000" />
-      <workItem from="1527055612972" duration="16319000" />
+      <workItem from="1527055612972" duration="17957000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45088000" />
+    <option name="totallyTimeSpent" value="46726000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="973" extended-state="6" />
@@ -682,16 +681,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/service/users.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="45" column="7" lean-forward="false" selection-start-line="45" selection-start-column="7" selection-end-line="45" selection-end-column="7" />
+        <state relative-caret-position="185">
+          <caret line="29" column="24" lean-forward="false" selection-start-line="29" selection-start-column="12" selection-end-line="29" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controller/users.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1015">
-          <caret line="107" column="7" lean-forward="false" selection-start-line="107" selection-start-column="7" selection-end-line="107" selection-end-column="7" />
+        <state relative-caret-position="-417">
+          <caret line="66" column="24" lean-forward="true" selection-start-line="66" selection-start-column="24" selection-end-line="66" selection-end-column="24" />
           <folding />
         </state>
       </provider>
