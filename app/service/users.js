@@ -17,45 +17,38 @@ class TopicService extends Service {
     return this.ctx.curl(url, opts);
   }
 
+  // 详情
   async show(params) {
     const result = await this.app.mysql.get('user', { id: params.id });
 
     return result;
-
   }
 
+  // 列表
   async list(params) {
     const result = this.app.mysql.select('user', params);
     // this.checkSuccess(result);
     return result;
   }
 
+  // 新增
   async create(params) {
     const result = await this.app.mysql.insert('user', params);
     return result;
   }
 
+  // 更新
   async update(params) {
     const result = await this.app.mysql.update('user', params);
-    return result
+    return result;
   }
 
-
-  async destroy(params){
+  // 删除
+  async destroy(params) {
     const result = await this.app.mysql.delete('user', {
       id: params.id,
     });
     return result;
-  }
-
-  checkSuccess(result) {
-    if (result.status !== 200) {
-      const errorMsg = result.data && result.data.error_msg ? result.data.error_msg : 'unknown error';
-      this.ctx.throw(result.status, errorMsg);
-    }
-    if (!result.data.success) {
-      this.ctx.throw(500, 'remote response error', { data: result.data });
-    }
   }
 }
 

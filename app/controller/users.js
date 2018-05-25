@@ -24,6 +24,7 @@ class TopicsController extends Controller {
     };
   }
 
+  // 详情
   async show() {
     const { ctx } = this;
     const result = await ctx.service.users.show({
@@ -36,6 +37,7 @@ class TopicsController extends Controller {
     };
   }
 
+  // 列表
   async index() {
     const { ctx } = this;
     const result = await ctx.service.users.list({
@@ -58,6 +60,7 @@ class TopicsController extends Controller {
 
   }
 
+  // 新增
   async create() {
     const { ctx } = this;
     const result = await this.app.mysql.get('user', { username: ctx.request.body.username });
@@ -77,6 +80,7 @@ class TopicsController extends Controller {
     }
   }
 
+  // 更新
   async update() {
     const { ctx } = this;
     const id = ctx.params.id;
@@ -101,7 +105,7 @@ class TopicsController extends Controller {
 
   }
 
-
+  // 删除
   async destroy(){
     const { ctx } = this;
     const id = ctx.params.id;
