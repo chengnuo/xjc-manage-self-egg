@@ -18,16 +18,6 @@ class TopicService extends Service {
   }
 
   async show(params) {
-    // const result = await this.request(`/topic/${params.id}`, {
-    //   data: {
-    //     mdrender: params.mdrender,
-    //     accesstoken: params.accesstoken,
-    //   },
-    // });
-    // this.checkSuccess(result);
-    //
-    // return result.data.data;
-
     const result = await this.app.mysql.get('user', { id: params.id });
 
     return result;
@@ -35,39 +25,17 @@ class TopicService extends Service {
   }
 
   async list(params) {
-    // const result = await this.request('/topics', {
-    //   data: params,
-    // });
-    //
-    // this.checkSuccess(result);
-    // return result.data.data;
-
     const result = this.app.mysql.select('user', params);
     // this.checkSuccess(result);
     return result;
   }
 
   async create(params) {
-    // const result = await this.request('/topics', {
-    //   method: 'post',
-    //   data: params,
-    //   contentType: 'json',
-    // });
-    //
-    // this.checkSuccess(result);
-    // return result.data.topic_id;
     const result = await this.app.mysql.insert('user', params);
     return result;
   }
 
   async update(params) {
-    // const result = await this.request('/topics/update', {
-    //   method: 'post',
-    //   data: params,
-    //   contentType: 'json',
-    // });
-    //
-    // this.checkSuccess(result);
     const result = await this.app.mysql.update('user', params);
     return result
   }

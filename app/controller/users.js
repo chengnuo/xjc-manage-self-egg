@@ -25,13 +25,6 @@ class TopicsController extends Controller {
   }
 
   async show() {
-    // const { ctx } = this;
-    //
-    // ctx.body = await ctx.service.users.show({
-    //   id: ctx.params.id,
-    //   mdrender: ctx.query.mdrender !== 'false',
-    //   accesstoken: ctx.query.accesstoken || '',
-    // });
     const { ctx } = this;
     const result = await ctx.service.users.show({
       id: ctx.params.id,
@@ -45,20 +38,6 @@ class TopicsController extends Controller {
 
   async index() {
     const { ctx } = this;
-
-    // ctx.validate({
-    //   page: { type: 'string', format: /\d+/, required: false },
-    //   tab: { type: 'enum', values: [ 'ask', 'share', 'job', 'good' ], required: false },
-    //   limit: { type: 'string', format: /\d+/, required: false },
-    // }, ctx.query);
-    //
-    // ctx.body = await ctx.service.users.list({
-    //   page: ctx.query.page,
-    //   tab: ctx.query.tab,
-    //   limit: ctx.query.limit,
-    //   mdrender: ctx.query.mdrender !== 'false',
-    // });
-
     const result = await ctx.service.users.list({
       columns: [
         'id',
@@ -80,16 +59,6 @@ class TopicsController extends Controller {
   }
 
   async create() {
-    // const { ctx } = this;
-    // ctx.validate(this.createRule);
-    //
-    // const id = await ctx.service.users.create(ctx.request.body);
-    // ctx.body = {
-    //   topic_id: id,
-    // };
-    // ctx.status = 201;
-
-
     const { ctx } = this;
     const result = await this.app.mysql.get('user', { username: ctx.request.body.username });
     console.log('result',result)
@@ -109,13 +78,6 @@ class TopicsController extends Controller {
   }
 
   async update() {
-    // const { ctx } = this;
-    // const id = ctx.params.id;
-    //
-    // ctx.validate(this.createRule);
-    // await ctx.service.users.update(Object.assign({ id }, ctx.request.body));
-    // ctx.status = 204;
-
     const { ctx } = this;
     const id = ctx.params.id;
     const result =  await ctx.service.users.update(Object.assign({ id }, ctx.request.body));
