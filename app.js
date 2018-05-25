@@ -32,9 +32,11 @@ const localHandler = async (ctx, user) => {
     }
     const userInfo = await ctx.service.login.find({
       username: user.username,
-      password: md5(user.password),
+      password: user.password,
     });
-    if (userInfo && (userInfo.password === md5(user.password))) {
+    console.log('userInfo.password',userInfo.password)
+    console.log('user.password',user.password)
+    if (userInfo && (userInfo.password === user.password)) {
       return {
         status: 200,
         message: '登录成功',

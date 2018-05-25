@@ -8,13 +8,13 @@ module.exports = app => {
   router.get('/', controller.home.index);
   const localStrategy = app.passport.authenticate('local', { // 鉴权
     successRedirect: '/api/signIn',
-    failureRedirect: '/notAuthorized',
+    failureRedirect: '/api/notAuthorized',
   });
   const apiRouter = app.router.namespace('/api');
   apiRouter.get('/signIn', controller.login.signIn); // 登入
   apiRouter.post('/signIn', localStrategy);
   apiRouter.get('/signOut', controller.login.signOut); // 登出
-  router.get('/notAuthorized', controller.notAuthorized.index); // 权限
+  apiRouter.get('/notAuthorized', controller.notAuthorized.index); // 权限
 
   // apiRouter.get('/user', controller.user.index); // 用户模块
 
