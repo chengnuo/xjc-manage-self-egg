@@ -48,7 +48,8 @@ class TopicsController extends Controller {
   // 列表
   async index() {
     const { ctx } = this;
-    const result = await ctx.service.users.list({
+
+    let queryData = {
       columns: [
         'id',
         'name',
@@ -59,13 +60,21 @@ class TopicsController extends Controller {
         'created_time',
         'username',
       ],
-    });
+    };
+    const list = await ctx.service.users.list(queryData); // 列表
+    const total = await ctx.service.users.total(); // 条数
 
-    if (result) {
+    console.log('total',total)
+
+
+    if (list) {
       ctx.body = {
         status: 200,
         message: '获取列表',
-        data: result,
+        data: {
+          list,
+          total,
+        },
       };
     } else {
       ctx.body = {

@@ -26,9 +26,16 @@ class TopicService extends Service {
 
   // 列表
   async list(params) {
-    const result = this.app.mysql.select('user', params);
+    const list = this.app.mysql.select('user', params);
+    // const total = this.app.mysql.count('user', params);
     // this.checkSuccess(result);
-    return result;
+    return list
+  }
+  // 条数
+  async total(params) {
+    const total = this.app.mysql.count('user', params);
+    // this.checkSuccess(result);
+    return total
   }
 
   // 新增
