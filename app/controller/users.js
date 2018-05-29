@@ -48,33 +48,12 @@ class TopicsController extends Controller {
   async index() {
     const { ctx } = this;
 
+    // console.log(ctx.params);
+    // console.log(ctx.query);
 
-    console.log(ctx.params);
-    console.log(ctx.query);
-
-    const whereData = {}; // 搜索关键词
-    let i = 0;
-    const ctxQuery = ctx.query;
-
-    console.log('ctx.query', ctx.query);
-
-
-    // this.filterIndexWhereData(ctxQuery);
-    for (i in ctxQuery) {
-      if (i === 'pageNum') {
-        continue;
-      } else if (i === 'pageSize') {
-        continue;
-      } else {
-        whereData[i] = ctxQuery[i];
-      }
-    }
-
-
-    const pageNum = Number(ctx.query.pageNum) || 10;
-    const pageSize = Number(ctx.query.pageSize) || 0;
-
-
+    const whereData = this.filterIndexWhereData(ctx.query); // 搜索关键词
+    const pageNum = Number(ctx.query.pageNum) || 10; // 每页几个
+    const pageSize = Number(ctx.query.pageSize - 1) * Number(ctx.query.pageNum) || 0; // 第几页
     // 列表搜索数据
     const listData = {
       columns: [
@@ -94,6 +73,7 @@ class TopicsController extends Controller {
     const list = await ctx.service.users.list(listData); // 列表
     const total = await ctx.service.users.total(whereData); // 条数
 
+    console.log('list', list);
 
     if (list) {
       ctx.body = {
@@ -182,8 +162,19 @@ class TopicsController extends Controller {
     }
   }
 
-  filterIndexWhereData(){
-
+  filterIndexWhereData(ctxQuery) {
+    const whereData = {};
+    let i = 0;
+    for (i in ctxQuery) {
+      if (i === 'pageNum') {
+        continue;
+      } else if (i === 'pageSize') {
+        continue;
+      } else {
+        whereData[i] = ctxQuery[i];
+      }
+    }
+    return whereData;
   }
 }
 
