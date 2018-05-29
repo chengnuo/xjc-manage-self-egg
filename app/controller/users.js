@@ -52,8 +52,10 @@ class TopicsController extends Controller {
     // console.log(ctx.query);
 
     const whereData = this.filterIndexWhereData(ctx.query); // 搜索关键词
-    const pageNum = Number(ctx.query.pageNum) || 10; // 每页几个
-    const pageSize = Number(ctx.query.pageSize - 1) * Number(ctx.query.pageNum) || 0; // 第几页
+    const pageSize = Number(ctx.query.pageSize) || 10; // 第几页
+    const pageCurrent = Number(ctx.query.pageCurrent - 1) * Number(ctx.query.pageSize) || 0; // 每页几个
+
+    console.log('pageCurrent', pageCurrent);
     // 列表搜索数据
     const listData = {
       columns: [
@@ -66,8 +68,8 @@ class TopicsController extends Controller {
         'created_time',
         'username',
       ],
-      limit: pageNum, // 返回数据量
-      offset: pageSize, // 数据偏移量
+      limit: pageSize, // 返回数据量
+      offset: pageCurrent, // 数据偏移量
       where: whereData,
     };
     const list = await ctx.service.users.list(listData); // 列表
@@ -166,7 +168,7 @@ class TopicsController extends Controller {
     const whereData = {};
     let i = 0;
     for (i in ctxQuery) {
-      if (i === 'pageNum') {
+      if (i === 'pageCurrent') {
         continue;
       } else if (i === 'pageSize') {
         continue;
