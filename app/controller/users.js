@@ -44,12 +44,39 @@ class TopicsController extends Controller {
       };
     }
   }
-
   // 列表
   async index() {
     const { ctx } = this;
 
-    let queryData = {
+
+    console.log(ctx.params);
+    console.log(ctx.query);
+
+    const whereData = {}; // 搜索关键词
+    let i = 0;
+    const ctxQuery = ctx.query;
+
+    console.log('ctx.query', ctx.query);
+
+
+    // this.filterIndexWhereData(ctxQuery);
+    for (i in ctxQuery) {
+      if (i === 'pageNum') {
+        continue;
+      } else if (i === 'pageSize') {
+        continue;
+      } else {
+        whereData[i] = ctxQuery[i];
+      }
+    }
+
+
+    const pageNum = Number(ctx.query.pageNum) || 10;
+    const pageSize = Number(ctx.query.pageSize) || 0;
+
+
+    // 列表搜索数据
+    const listData = {
       columns: [
         'id',
         'name',
@@ -60,11 +87,12 @@ class TopicsController extends Controller {
         'created_time',
         'username',
       ],
+      limit: pageNum, // 返回数据量
+      offset: pageSize, // 数据偏移量
+      where: whereData,
     };
-    const list = await ctx.service.users.list(queryData); // 列表
-    const total = await ctx.service.users.total(); // 条数
-
-    console.log('total',total)
+    const list = await ctx.service.users.list(listData); // 列表
+    const total = await ctx.service.users.total(whereData); // 条数
 
 
     if (list) {
@@ -152,6 +180,10 @@ class TopicsController extends Controller {
         message: '用户-删除失败',
       };
     }
+  }
+
+  filterIndexWhereData(){
+
   }
 }
 
