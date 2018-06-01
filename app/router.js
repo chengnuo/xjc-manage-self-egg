@@ -20,4 +20,6 @@ module.exports = app => {
 
   // user模块 restful
   app.router.resources('users', '/api/users', app.controller.users);
+  // 角色模块 restful
+  app.router.resources('roles', '/api/roles', app.controller.roles);
 };
