@@ -60,6 +60,12 @@ class TopicService extends Service {
 
   // 设置角色
   async setRoles(params) {
+    const result = await this.app.mysql.insert('user_role', params);
+    return result;
+  }
+
+  // 设置角色列表
+  async setRolesList(params) {
     const list = this.app.mysql.select('role', params);
     return list;
   }

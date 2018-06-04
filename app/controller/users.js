@@ -163,8 +163,8 @@ class TopicsController extends Controller {
       };
     }
   }
-  // 列表
-  async setRoles() {
+  // 角色列表
+  async setRolesList() {
     const { ctx } = this;
 
     // 列表搜索数据
@@ -181,7 +181,7 @@ class TopicsController extends Controller {
         // 'username',
       ],
     };
-    const list = await ctx.service.users.setRoles(listData); // 列表
+    const list = await ctx.service.users.setRolesList(listData); // 列表
     if (list) {
       ctx.body = {
         status: 200,
@@ -194,6 +194,26 @@ class TopicsController extends Controller {
       ctx.body = {
         status: 201,
         message: '角色-列表不存在',
+      };
+    }
+  }
+  // 设置角色
+  async setRoles() {
+
+    const { ctx } = this;
+    const list = await ctx.service.users.setRoles(ctx.request.body); // 列表
+    if (list) {
+      ctx.body = {
+        status: 200,
+        message: '角色设置成功',
+        data: {
+          list,
+        },
+      };
+    } else {
+      ctx.body = {
+        status: 201,
+        message: '角色不存在',
       };
     }
   }

@@ -20,7 +20,8 @@ module.exports = app => {
 
   // user模块 restful
   app.router.resources('users', '/api/users', app.controller.users);
-  apiRouter.get('users', '/setRoles', app.controller.users.setRoles); // 设置角色
+  apiRouter.post('users', '/setRoles', app.controller.users.setRoles); // 设置角色
+  apiRouter.get('users', '/setRolesList', app.controller.users.setRolesList); // 设置角色列表
   // 角色模块 restful
   app.router.resources('roles', '/api/roles', app.controller.roles);
   // 权限模块 restful
