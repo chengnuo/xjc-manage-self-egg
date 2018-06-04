@@ -182,12 +182,21 @@ class TopicsController extends Controller {
       ],
     };
     const list = await ctx.service.users.setRolesList(listData); // 列表
+    const userRoleList = await this.app.mysql.select('user_role', {
+      where: {
+        uid: ctx.query.uid,
+      },
+    });
+
+    console.log('ctx.query', ctx.query.uid);
+    console.log('userRoleList', userRoleList);
     if (list) {
       ctx.body = {
         status: 200,
         message: '获取列表',
         data: {
           list,
+          userRoleList,
         },
       };
     } else {
@@ -203,6 +212,11 @@ class TopicsController extends Controller {
     const { ctx } = this;
 
     console.log('ctx.request.body', ctx.request.body);
+
+
+    const result = await this.app.mysql.delete('user_role', {
+      uid: ctx.request.body[0].uid,
+    });
 
     const list = await ctx.service.users.setRoles(ctx.request.body); // 列表
     if (list) {
