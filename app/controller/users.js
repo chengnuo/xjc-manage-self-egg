@@ -201,6 +201,9 @@ class TopicsController extends Controller {
   async setRoles() {
 
     const { ctx } = this;
+
+    console.log('ctx.request.body', ctx.request.body);
+
     const list = await ctx.service.users.setRoles(ctx.request.body); // 列表
     if (list) {
       ctx.body = {
@@ -216,6 +219,12 @@ class TopicsController extends Controller {
         message: '角色不存在',
       };
     }
+
+    // ctx.body = {
+    //   status: 200,
+    //   message: '角色不存在',
+    //   data : ctx.request.body,
+    // }
   }
 
   filterIndexWhereData(ctxQuery) {
