@@ -100,8 +100,9 @@ class TopicsController extends Controller {
   // 新增
   async create() {
     const { ctx } = this;
-    const result = await this.app.mysql.get('user', { name: ctx.request.body.name });
+    const result = await this.app.mysql.get('role', { name: ctx.request.body.name });
     console.log('result', result);
+    console.log('ctx.request.body.name', ctx.request.body.name);
     if (result && result.name === ctx.request.body.name) {
       ctx.body = {
         status: 201,

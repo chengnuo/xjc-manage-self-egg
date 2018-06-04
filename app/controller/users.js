@@ -163,6 +163,40 @@ class TopicsController extends Controller {
       };
     }
   }
+  // 列表
+  async setRoles() {
+    const { ctx } = this;
+
+    // 列表搜索数据
+    const listData = {
+      columns: [
+        'id',
+        'name',
+        'status',
+        // 'email',
+        // 'is_admin',
+        // 'status',
+        'updated_time',
+        'created_time',
+        // 'username',
+      ],
+    };
+    const list = await ctx.service.users.setRoles(listData); // 列表
+    if (list) {
+      ctx.body = {
+        status: 200,
+        message: '获取列表',
+        data: {
+          list,
+        },
+      };
+    } else {
+      ctx.body = {
+        status: 201,
+        message: '角色-列表不存在',
+      };
+    }
+  }
 
   filterIndexWhereData(ctxQuery) {
     const whereData = {};

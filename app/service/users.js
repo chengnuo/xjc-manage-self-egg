@@ -57,6 +57,12 @@ class TopicService extends Service {
     });
     return result;
   }
+
+  // 设置角色
+  async setRoles(params) {
+    const list = this.app.mysql.select('role', params);
+    return list;
+  }
 }
 
 module.exports = TopicService;
