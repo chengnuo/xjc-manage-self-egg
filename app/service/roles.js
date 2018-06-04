@@ -57,6 +57,19 @@ class TopicService extends Service {
     });
     return result;
   }
+
+
+  // 设置权限
+  async setAccess(params) {
+    const result = await this.app.mysql.insert('role_access', params);
+    return result;
+  }
+
+  // 设置权限列表
+  async setAccessList(params) {
+    const list = this.app.mysql.select('access', params);
+    return list;
+  }
 }
 
 module.exports = TopicService;

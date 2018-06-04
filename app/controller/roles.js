@@ -166,6 +166,86 @@ class TopicsController extends Controller {
     }
   }
 
+
+  // 权限列表
+  async setAccessList() {
+    const { ctx } = this;
+
+    // 列表搜索数据
+    const listData = {
+      columns: [
+        'id',
+        'title',
+        'urls',
+        'status',
+        // 'email',
+        // 'is_admin',
+        // 'status',
+        'updated_time',
+        'created_time',
+        // 'username',
+      ],
+    };
+    const list = await ctx.service.roles.setAccessList(listData); // 列表
+    const userAccessList = await this.app.mysql.select('role_access', {
+      where: {
+        role_id: ctx.query.role_id,
+      },
+    });
+
+    console.log('ctx.query', ctx.query.uid);
+    console.log('userAccessList', userAccessList);
+    if (list) {
+      ctx.body = {
+        status: 200,
+        message: '获取列表',
+        data: {
+          list,
+          userAccessList,
+        },
+      };
+    } else {
+      ctx.body = {
+        status: 201,
+        message: '权限-列表不存在',
+      };
+    }
+  }
+  // 设置权限
+  async setAccess() {
+
+    const { ctx } = this;
+
+    console.log('ctx.request.body', ctx.request.body);
+
+
+    const result = await this.app.mysql.delete('role_access', {
+      role_id: ctx.request.body[0].role_id,
+    });
+
+    const list = await ctx.service.roles.setAccess(ctx.request.body); // 列表
+    if (list) {
+      ctx.body = {
+        status: 200,
+        message: '权限设置成功',
+        data: {
+          list,
+        },
+      };
+    } else {
+      ctx.body = {
+        status: 201,
+        message: '权限不存在',
+      };
+    }
+
+    // ctx.body = {
+    //   status: 200,
+    //   message: '角色不存在',
+    //   data : ctx.request.body,
+    // }
+  }
+
   filterIndexWhereData(ctxQuery) {
     const whereData = {};
     let i = 0;
