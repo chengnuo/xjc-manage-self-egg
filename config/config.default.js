@@ -6,6 +6,8 @@ module.exports = appInfo => {
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1525093940453_2422';
 
+  config.auth_cookie_name = appInfo.name + '_1525093940453_2422';
+
   // add your config here
   config.middleware = [];
 
