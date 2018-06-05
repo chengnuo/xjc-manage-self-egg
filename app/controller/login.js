@@ -62,9 +62,29 @@ class TestController extends Controller {
           message: ctx.user.message,
         };
       } else { // 正常返回信息
+
+        // 用户
+        const resultUser = await this.app.mysql.get('user', {
+          username: ctx.user.data.username,
+          password: ctx.user.data.password,
+        });
+
+        // 角色
+        const resultUserRole = await this.app.mysql.select('user_role', {
+          where: {
+            uid: resultUser.id,
+          },
+        });
+
+        console.log('resultUserRole', resultUserRole);
+
         ctx.body = {
           status: 200,
           message: '登录成功',
+          data: {
+            userId: resultUser.id, // 用户ID
+            userRole: resultUserRole, // 角色
+          },
         };
       }
 
