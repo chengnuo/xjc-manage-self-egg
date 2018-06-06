@@ -76,7 +76,27 @@ class TestController extends Controller {
           },
         });
 
-        console.log('resultUserRole', resultUserRole);
+        let filterUserRole = resultUserRole.map((item,index)=>{
+          if(resultUserRole.length-1 === index){
+            return `role_id=${item.role_id}`;
+          }else {
+            return `role_id=${item.role_id} || `;
+          }
+        });
+
+        console.log('filterUserRole', filterUserRole.join(''));
+        console.log('resultUserRole', resultUserRole.length);
+
+        // 权限
+        // const resultAccess = await this.app.mysql.query('SELECT role.*, access.* FROM role,access,role_access WHERE role.id=role_access.role_id AND access.id=role_access.access_id');
+        const resultAccess = await this.app.mysql.query(`SELECT role.name, role_access.role_id, role_access.access_id FROM role LEFT JOIN role_access ON role.id=role_access.access_id WHERE ${filterUserRole.join('')}`);
+        // select *
+        // from
+        // (select id,sum(money) as mm from a表 group by id)  aaa,
+        //   (select id,sum(money) as nn  from b表 group by id)  bbb
+        // where aaa.id=bbb.id and aaa.mm=bbb.nn;
+
+        console.log('resultAccess', resultAccess);
 
         ctx.body = {
           status: 200,
@@ -84,6 +104,8 @@ class TestController extends Controller {
           data: {
             userId: resultUser.id, // 用户ID
             userRole: resultUserRole, // 角色
+            userAccess: resultAccess,
+            filterUserRole: filterUserRole,
           },
         };
       }
