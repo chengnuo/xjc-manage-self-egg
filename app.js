@@ -117,14 +117,14 @@ module.exports = app => {
   });
   // 反序列化后把用户信息从 session 中取出来，反查数据库拿到完整信息
   app.passport.deserializeUser(async (ctx, user) => {
-    const auth_token = user.data.username + '$$$$'; // 以后可能会存储更多信息，用 $$$$ 来分隔
-    const opts = {
-      path: '/',
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-      signed: true,
-      httpOnly: true,
-    };
-    ctx.cookies.set(app.config.auth_cookie_name, auth_token, opts);
+    // const auth_token = user.data.username + '$$$$'; // 以后可能会存储更多信息，用 $$$$ 来分隔
+    // const opts = {
+    //   path: '/',
+    //   maxAge: 1000 * 60 * 60 * 24 * 30,
+    //   signed: true,
+    //   httpOnly: true,
+    // };
+    // ctx.cookies.set(app.config.auth_cookie_name, auth_token, opts);
     console.log('deserializeUser---1', user);
     return user;
   });
