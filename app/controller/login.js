@@ -76,6 +76,12 @@ class TestController extends Controller {
           },
         });
 
+
+        // 设置 Session
+        ctx.session.user = resultUser;
+
+        console.log('ctx.session.user', ctx.session.user);
+
         // console.log('cookie-1', ctx.cookies.get(this.app.config.auth_cookie_name) );
 
         let filterUserRole = resultUserRole.map((item,index)=>{

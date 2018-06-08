@@ -28,4 +28,6 @@ module.exports = app => {
   apiRouter.get('roles', '/setAccessList', app.controller.roles.setAccessList); // 设置权限列表
   // 权限模块 restful
   app.router.resources('access', '/api/access', app.controller.access);
+  // 博客模块 restful
+  app.router.resources('blogs', '/api/blogs', app.controller.blogs);
 };
