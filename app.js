@@ -3,54 +3,51 @@ const LocalStrategy = require('passport-local').Strategy;
 const md5 = require('md5');
 console.log('hahahahahha');
 const localHandler = async (ctx, user) => {
-  let username = user.username;
-  let password = user.password;
+  const username = user.username;
+  const password = user.password;
 
-  console.log('username',username)
+  // console.log('username', usernamess);
 
-  if(!username){
+  if (!username) {
     return {
       err: '判断错误逻辑',
       status: 10001,
       message: '请输入用户名',
     };
-  }else{
-    const userNameInfo = await ctx.service.login.find({
-      username: user.username,
-      // password: md5(user.password),
-    });
+  }
+  const userNameInfo = await ctx.service.login.find({
+    username: user.username,
+    // password: md5(user.password),
+  });
     // if (userInfo) {
     //   return userInfo;
     // }
 
-    if (!userNameInfo) {
-      return {
-        err: '判断错误逻辑',
-        status: 10001,
-        message: '用户名不存在',
-      };
-    }
-    const userInfo = await ctx.service.login.find({
-      username: user.username,
-      password: user.password,
-    });
-    // console.log('userInfo.password',userInfo.password)
-    // console.log('user.password',user.password)
-    if (userInfo && (userInfo.password === user.password)) {
-      return {
-        status: 200,
-        message: '登录成功',
-        data: user,
-      };
-    }
+  if (!userNameInfo) {
     return {
       err: '判断错误逻辑',
       status: 10001,
-      message: '密码错误',
+      message: '用户名不存在',
     };
   }
-
-
+  const userInfo = await ctx.service.login.find({
+    username: user.username,
+    password: user.password,
+  });
+    // console.log('userInfo.password',userInfo.password)
+    // console.log('user.password',user.password)
+  if (userInfo && (userInfo.password === user.password)) {
+    return {
+      status: 200,
+      message: '登录成功',
+      data: user,
+    };
+  }
+  return {
+    err: '判断错误逻辑',
+    status: 10001,
+    message: '密码错误',
+  };
 
 
 };
@@ -112,7 +109,7 @@ module.exports = app => {
     //   httpOnly: true,
     // };
     // ctx.cookies.set(app.config.auth_cookie_name, auth_token, opts);
-    // console.log('serializeUser---1', user.data.user);
+    console.log('serializeUser---1', user.data.user);
     return user;
   });
   // 反序列化后把用户信息从 session 中取出来，反查数据库拿到完整信息

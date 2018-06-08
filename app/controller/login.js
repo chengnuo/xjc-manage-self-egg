@@ -76,6 +76,8 @@ class TestController extends Controller {
           },
         });
 
+        // console.log('cookie-1', ctx.cookies.get(this.app.config.auth_cookie_name) );
+
         let filterUserRole = resultUserRole.map((item,index)=>{
           if(resultUserRole.length-1 === index){
             return `role_id=${item.role_id}`;
