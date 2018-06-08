@@ -34,8 +34,8 @@ const localHandler = async (ctx, user) => {
       username: user.username,
       password: user.password,
     });
-    console.log('userInfo.password',userInfo.password)
-    console.log('user.password',user.password)
+    // console.log('userInfo.password',userInfo.password)
+    // console.log('user.password',user.password)
     if (userInfo && (userInfo.password === user.password)) {
       return {
         status: 200,
