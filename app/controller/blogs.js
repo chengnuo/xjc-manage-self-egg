@@ -51,7 +51,10 @@ class TopicsController extends Controller {
     // console.log(ctx.params);
     // console.log(ctx.query);
 
-    const whereData = this.filterIndexWhereData(ctx.query); // 搜索关键词
+    const whereData = this.filterIndexWhereData(Object.assign({}, ctx.query, {
+      id: ctx.session.user.id, // 从sesstion 里面获取
+    })); // 搜索关键词
+
     const pageSize = Number(ctx.query.pageSize) || 10; // 第几页
     const pageCurrent = Number(ctx.query.pageCurrent - 1) * Number(ctx.query.pageSize) || 0; // 每页几个
 
