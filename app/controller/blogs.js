@@ -52,8 +52,10 @@ class TopicsController extends Controller {
     // console.log(ctx.query);
 
     const whereData = this.filterIndexWhereData(Object.assign({}, ctx.query, {
-      id: ctx.session.user.id, // 从sesstion 里面获取
+      uid: ctx.session.user.id, // 从sesstion 里面获取
     })); // 搜索关键词
+
+    console.log('whereData', whereData);
 
     const pageSize = Number(ctx.query.pageSize) || 10; // 第几页
     const pageCurrent = Number(ctx.query.pageCurrent - 1) * Number(ctx.query.pageSize) || 0; // 每页几个
@@ -98,15 +100,17 @@ class TopicsController extends Controller {
   // 新增
   async create() {
     const { ctx } = this;
-    const result = await this.app.mysql.get('user', { username: ctx.request.body.username });
+    const result = await this.app.mysql.get('blog', { title: ctx.request.body.title });
     console.log('result', result);
-    if (result && result.username === ctx.request.body.username) {
+    if (result && result.title === ctx.request.body.title) {
       ctx.body = {
         status: 201,
-        message: '博客名已存在，请使用其他博客名',
+        message: '博客标题已存在，请使用其他博客标题',
       };
     } else {
-      const id = await ctx.service.blogs.create(ctx.request.body);
+      const id = await ctx.service.blogs.create(Object.assign({}, ctx.request.body, {
+        uid: ctx.session.user.id, // 从sesstion 里面获取
+      }));
       ctx.body = {
         status: 200,
         message: '博客-新增',
