@@ -30,4 +30,6 @@ module.exports = app => {
   app.router.resources('access', '/api/access', app.controller.access);
   // 博客模块 restful
   app.router.resources('blogs', '/api/blogs', app.controller.blogs);
+  // 计划模块 restful
+  app.router.resources('blogs', '/api/plans', app.controller.plans);
 };
