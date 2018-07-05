@@ -32,6 +32,8 @@ exports.validate = {
 };
 
 
+
+
 // exports.session = {
 //   key: 'EGG_SESS',
 //   maxAge: 24 * 3600 * 1000, // 1 天
