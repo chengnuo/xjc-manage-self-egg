@@ -4,6 +4,7 @@
   "description": "xjc-manage-self-egg",
   "private": true,
   "dependencies": {
+    "await-stream-ready": "^1.0.1",
     "egg": "^2.2.1",
     "egg-mysql": "^3.0.0",
     "egg-passport": "^2.0.1",
@@ -12,7 +13,8 @@
     "egg-scripts": "^2.5.0",
     "egg-validate": "^1.0.0",
     "md5": "^2.2.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "stream-wormhole": "^1.0.3"
   },
   "devDependencies": {
     "autod": "^3.0.1",

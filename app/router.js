@@ -34,4 +34,6 @@ module.exports = app => {
   app.router.resources('plans', '/api/plans', app.controller.plans);
   // 工具模块 restful
   app.router.resources('tools', '/api/tools', app.controller.tools);
+  // 上传模块
+  apiRouter.post('/upload', app.controller.upload.upload);
 };
