@@ -107,11 +107,11 @@ class TopicsController extends Controller {
     if (result && result.title === ctx.request.body.title) {
       ctx.body = {
         status: 201,
-        message: '计划标题已存在，请使用其他计划标题',
+        message: '工具标题已存在，请使用其他工具标题',
       };
     } else {
       const id = await ctx.service.tools.create(Object.assign({}, ctx.request.body, {
-        uid: ctx.session.user.id, // 从sesstion 里面获取
+        // uid: ctx.session.user.id, // 从sesstion 里面获取
       }));
       ctx.body = {
         status: 200,

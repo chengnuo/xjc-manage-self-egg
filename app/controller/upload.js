@@ -13,8 +13,13 @@ class UploadAjaxController extends Controller {
 
   async upload() {
     const stream = await this.ctx.getFileStream();
-    const filename = encodeURIComponent(stream.fields.name) + path.extname(stream.filename).toLowerCase();
-    const target = path.join(this.config.baseDir, 'app/public', filename);
+
+
+    // const filename = encodeURIComponent(stream.fields.name) + path.extname(stream.filename).toLowerCase();
+    const filename = encodeURIComponent(stream.filename);
+    console.log('stream', stream)
+    console.log('filename', filename)
+    const target = path.join(this.config.baseDir, 'app/public/images', filename);
     const writeStream = fs.createWriteStream(target);
     try {
       await awaitWriteStream(stream.pipe(writeStream));
@@ -23,7 +28,8 @@ class UploadAjaxController extends Controller {
       throw err;
     }
 
-    this.ctx.body = { url: '/public/' + filename };
+    // this.ctx.body = { url: '/public/' + filename };
+    this.ctx.body = { url: filename };
   }
 }
 
