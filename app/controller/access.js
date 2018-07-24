@@ -62,6 +62,7 @@ class TopicsController extends Controller {
         'id',
         'title',
         'urls',
+        'type',  // api menu button
         'status',
         // 'email',
         // 'is_admin',
