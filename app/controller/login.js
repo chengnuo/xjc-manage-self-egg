@@ -84,27 +84,50 @@ class TestController extends Controller {
 
         // console.log('cookie-1', ctx.cookies.get(this.app.config.auth_cookie_name) );
 
+        // 过滤
+
         let filterUserRole = resultUserRole.map((item,index)=>{
           if(resultUserRole.length-1 === index){
-            return `role_id=${item.role_id}`;
+            return `${item.role_id}`;
           }else {
-            return `role_id=${item.role_id} || `;
+            return `${item.role_id} || `;
           }
         });
 
-        console.log('filterUserRole', filterUserRole.join(''));
-        console.log('resultUserRole', resultUserRole.length);
+        // 5,权限
+        const resultRoleAccess = await this.app.mysql.select('role_access', {
+          where: {
+            ['role_id']: filterUserRole,
+          },
+        });
+
+        let filterRoleAccess = resultRoleAccess.map((item,index)=>{
+          if(resultRoleAccess.length-1 === index){
+            return `access.id=${item.access_id}`;
+          }else {
+            return `access.id=${item.access_id} || `;
+          }
+        });
 
         // 权限
         // const resultAccess = await this.app.mysql.query('SELECT role.*, access.* FROM role,access,role_access WHERE role.id=role_access.role_id AND access.id=role_access.access_id');
-        const resultAccess = await this.app.mysql.query(`SELECT role.name, role_access.role_id, role_access.access_id FROM role LEFT JOIN role_access ON role.id=role_access.access_id WHERE ${filterUserRole.join('')}`);
+        // const resultAccess = await this.app.mysql.query(`SELECT role.name, role_access.role_id, role_access.access_id FROM role LEFT JOIN role_access ON role.id=role_access.access_id WHERE ${filterUserRole.join('')}`);
+
+        // 7，权限API
+        const resultAccessAPI = await this.app.mysql.query(`SELECT access.id, access.title,access.urls,access.type FROM access LEFT JOIN role_access ON access.id=role_access.role_id WHERE (${filterRoleAccess.join('')}) AND access.type='api' group by id`);
+
+        // 7，权限Menu
+        const resultAccessMenu = await this.app.mysql.query(`SELECT access.id, access.title,access.urls,access.type FROM access LEFT JOIN role_access ON access.id=role_access.role_id WHERE (${filterRoleAccess.join('')}) AND access.type='menu' group by id`);
+
+        // 7，权限Button
+        const resultAccessButton = await this.app.mysql.query(`SELECT access.id, access.title,access.urls,access.type FROM access LEFT JOIN role_access ON access.id=role_access.role_id WHERE (${filterRoleAccess.join('')}) AND access.type='button' group by id`);
         // select *
         // from
         // (select id,sum(money) as mm from a表 group by id)  aaa,
         //   (select id,sum(money) as nn  from b表 group by id)  bbb
         // where aaa.id=bbb.id and aaa.mm=bbb.nn;
 
-        console.log('resultAccess', resultAccess);
+        // console.log('resultAccess', resultAccess);
 
         ctx.body = {
           status: 200,
@@ -112,8 +135,10 @@ class TestController extends Controller {
           data: {
             userId: resultUser.id, // 用户ID
             userRole: resultUserRole, // 角色
-            userAccess: resultAccess,
             filterUserRole: filterUserRole,
+            resultAccessAPI,
+            resultAccessMenu,
+            resultAccessButton,
           },
         };
       }

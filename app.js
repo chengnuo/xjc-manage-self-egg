@@ -109,7 +109,7 @@ module.exports = app => {
     //   httpOnly: true,
     // };
     // ctx.cookies.set(app.config.auth_cookie_name, auth_token, opts);
-    console.log('serializeUser---1', user.data.user);
+    // console.log('serializeUser---1', user.data.user);
     return user;
   });
   // 反序列化后把用户信息从 session 中取出来，反查数据库拿到完整信息
