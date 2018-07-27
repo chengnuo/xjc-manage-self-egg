@@ -36,5 +36,8 @@ module.exports = app => {
   app.router.resources('tools', '/api/tools', app.controller.tools);
   // 上传模块
   apiRouter.post('/upload', app.controller.upload.upload);
+  // 邮箱
   apiRouter.post('/email', app.controller.email.index);
+  // 发送短信
+  apiRouter.post('/sms', app.controller.sms.index);
 };
