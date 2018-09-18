@@ -117,7 +117,7 @@ class TestController extends Controller {
         const resultAccessAPI = await this.app.mysql.query(`SELECT access.id, access.title,access.urls,access.type FROM access LEFT JOIN role_access ON access.id=role_access.role_id WHERE (${filterRoleAccess.join('')}) AND access.type='api' group by id`);
 
         // 7，权限Menu
-        const resultAccessMenu = await this.app.mysql.query(`SELECT access.id, access.title,access.urls,access.type FROM access LEFT JOIN role_access ON access.id=role_access.role_id WHERE (${filterRoleAccess.join('')}) AND access.type='menu' group by id`);
+        const resultAccessMenu = await this.app.mysql.query(`SELECT access.id, access.title, access.name, access.urls,access.type FROM access LEFT JOIN role_access ON access.id=role_access.role_id WHERE (${filterRoleAccess.join('')}) AND access.type='menu' group by id`);
 
         // 7，权限Button
         const resultAccessButton = await this.app.mysql.query(`SELECT access.id, access.title,access.urls,access.type FROM access LEFT JOIN role_access ON access.id=role_access.role_id WHERE (${filterRoleAccess.join('')}) AND access.type='button' group by id`);

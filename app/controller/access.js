@@ -61,6 +61,7 @@ class TopicsController extends Controller {
       columns: [
         'id',
         'title',
+        'name',
         'urls',
         'type',  // api menu button
         'status',
