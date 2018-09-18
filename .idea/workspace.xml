@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8e7f11d5-0358-410a-987f-906c49f1ea7f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/login.js" afterPath="$PROJECT_DIR$/app/controller/login.js" />
-    </list>
+    <list default="true" id="8e7f11d5-0358-410a-987f-906c49f1ea7f" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
