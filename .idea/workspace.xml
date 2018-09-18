@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e7f11d5-0358-410a-987f-906c49f1ea7f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/access.js" afterPath="$PROJECT_DIR$/app/controller/access.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/login.js" afterPath="$PROJECT_DIR$/app/controller/login.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -74,8 +72,8 @@
       <file leaf-file-name="login.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controller/login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="119" column="104" lean-forward="false" selection-start-line="119" selection-start-column="104" selection-end-line="119" selection-end-column="104" />
+            <state relative-caret-position="342">
+              <caret line="143" column="31" lean-forward="false" selection-start-line="143" selection-start-column="12" selection-end-line="143" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -411,12 +409,12 @@
       <workItem from="1536916128956" duration="652000" />
       <workItem from="1536917392704" duration="1509000" />
       <workItem from="1537153401390" duration="1230000" />
-      <workItem from="1537238822103" duration="1069000" />
+      <workItem from="1537238822103" duration="1669000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86116000" />
+    <option name="totallyTimeSpent" value="86716000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="978" extended-state="0" />
@@ -425,7 +423,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24954791" sideWeight="0.33639145" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25934315" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25934315" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24954791" sideWeight="0.66360855" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -820,8 +818,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controller/login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="119" column="104" lean-forward="false" selection-start-line="119" selection-start-column="104" selection-end-line="119" selection-end-column="104" />
+        <state relative-caret-position="342">
+          <caret line="143" column="31" lean-forward="false" selection-start-line="143" selection-start-column="12" selection-end-line="143" selection-end-column="31" />
           <folding />
         </state>
       </provider>
