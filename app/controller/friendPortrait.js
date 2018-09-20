@@ -67,7 +67,7 @@ class TopicsController extends Controller {
         'id',
         'name',
         'description',
-        'url',
+        'avatar',
       ],
       limit: pageSize, // 返回数据量
       offset: pageCurrent, // 数据偏移量
