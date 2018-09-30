@@ -52,7 +52,7 @@ class TopicsController extends Controller {
     // console.log(ctx.query);
 
     const whereData = this.filterIndexWhereData(Object.assign({}, ctx.query, {
-      uid: ctx.session.user.id, // 从sesstion 里面获取
+      uid: ctx.session.user && ctx.session.user.id || 1, // 从sesstion 里面获取
     })); // 搜索关键词
 
     console.log('whereData', whereData);

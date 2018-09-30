@@ -50,5 +50,27 @@ module.exports = appInfo => {
     agent: false,
   };
 
+  // token 去掉csrf验证
+  config.security = {
+    csrf: {
+      enable: false,
+      // ignoreJSON: true,
+    },
+    // 白名单
+    // domainWhiteList: [ 'http://auth.vquery.com:7001', 'http://a.vquery.com:7001' ],
+    // withCredentials: true,
+    domainWhiteList: ['.vquery.com', 'blog.vquery.com', 'http://localhost:3000/'],  // security whitelist, starts with '.'
+  }
+
+
+  // # 黑白名单 {app_root}/config/config.default.js
+  config.cors = {
+    // 'origin': 'http://auth.vquery.com:7001',
+    'allowMethods': 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+    'credentials': true,
+    // 'allowHeaders': 'Origin, X-Requested-With, Content-Type, Accept',
+    // 'withCredentials': true,
+  };
+
   return config;
 };
