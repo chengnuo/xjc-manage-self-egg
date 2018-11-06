@@ -12,5 +12,9 @@ module.exports = app => {
   apiRouter.post('/isSignIn', controller.login.isSignIn); // 判断是都登录
   apiRouter.post('/getUserId', controller.login.getUserId); // 获取用户id
   apiRouter.post('/signOut', controller.login.signOut); // 登出
-  apiRouter.post('/authMenuList', controller.authMenu.list); // 权限菜单-列表
+
+  apiRouter.post('/authMenu/list', controller.authMenu.list); // 权限菜单-列表
+  apiRouter.post('/authMenu/create', controller.authMenu.create); // 权限菜单-新增
+  apiRouter.post('/authMenu/delete', controller.authMenu.delete); // 权限菜单-删除
+  apiRouter.post('/authMenu/update', controller.authMenu.update); // 权限菜单-更新
 };
