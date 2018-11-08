@@ -3,55 +3,39 @@
 const Controller = require('egg').Controller;
 const moment = require('moment');
 
-function fn(data, pid) {
-  let result = [];
-  let temp = [];
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].pid == pid) {
-      let obj = {
-        name: data[i].name,
-        id: data[i].id
-      };
-      temp = fn(data, data[i].id);
-
-      console.log('temp', temp)
-
-      if (temp.length > 0) {
-        obj.children = temp;
-      }
-      result.push(obj);
-    }
-  }
-  return result;
-}
-
-
 class TestController extends Controller {
   /**
-   * 需求：权限菜单-列表
+   * 需求：用户-列表
    * 版本号：v1.0.0
    */
   async list() {
     const { ctx } = this;
-    const list = await this.app.mysql.select('deep_cate', {
+    const list = await this.app.mysql.select('user', {
       where: {
         status: 1, // 是否可用
       },
-      columns: [ 'id', 'pid', 'name' ],
+      columns: [
+        'id',
+        'name',
+        'email',
+        'is_admin',
+        'status',
+        'updated_time',
+        'created_time',
+        'username',
+      ],
     });
-    let fnList = fn(list, 0)
 
     ctx.body = {
       status: 200,
-      message: '权限菜单',
+      message: '用户-列表',
       data: {
         list: list,
-        fnList,
       },
     };
   }
   /**
-   * 需求：权限菜单-新增
+   * 需求：用户-新增
    * 1，判断名字是否存在。
    * 2，判断pid是否存在。
    * 3，新增
@@ -59,39 +43,37 @@ class TestController extends Controller {
   async create() {
     const { ctx } = this;
 
-    if (!ctx.request.body.name) {
+    if (!ctx.request.body.username) {
       ctx.body = {
         status: 501,
-        message: '请输入菜单名称',
+        message: '请输入用户名称',
       };
       return false;
     }
-    if (!ctx.request.body.pid) {
+    if (!ctx.request.body.password) {
       ctx.body = {
         status: 501,
-        message: 'pid不存在',
+        message: '请输入用户密码',
       };
       return false;
     }
-
-    const list = await this.app.mysql.get('deep_cate', {
+    const list = await this.app.mysql.get('user', {
       status: 1, // 是否可用
-      name: ctx.request.body.name,
+      username: ctx.request.body.username,
     });
     if (list) {
       ctx.body = {
         status: 501,
-        message: '菜单名称已经存在，请重新选择菜单名称',
+        message: '用户名称已经存在，请重新选择用户名称',
       };
     } else {
-      const result = await this.app.mysql.insert('deep_cate', {
-        name: ctx.request.body.name,
-        pid: ctx.request.body.pid,
+      const result = await this.app.mysql.insert('user', {
+        ...ctx.request.body,
       });
       if (result) {
         ctx.body = {
           status: 200,
-          message: '菜单-新增成功',
+          message: '用户-新增成功',
         };
       } else {
         ctx.body = {
@@ -103,7 +85,7 @@ class TestController extends Controller {
     }
   }
   /**
-   * 需求：权限菜单-编辑菜单
+   * 需求：用户-编辑用户
    * 版本号：v1.0.0
    */
   async update() {
@@ -112,28 +94,19 @@ class TestController extends Controller {
     if (!ctx.request.body.id) {
       ctx.body = {
         status: 501,
-        message: 'id不存在',
+        message: '用户-id不存在',
       };
       return false;
     }
 
-    if (!ctx.request.body.name) {
-      ctx.body = {
-        status: 501,
-        message: '菜单名称不存在',
-      };
-      return false;
-    }
-
-    const list = await this.app.mysql.update('deep_cate', {
-      name: ctx.request.body.name,
-      id: ctx.request.body.id,
+    const list = await this.app.mysql.update('user', {
+      ...ctx.request.body,
     });
 
     if (list.affectedRows === 1) {
       ctx.body = {
         status: 200,
-        message: '更新成功',
+        message: '用户-更新成功',
       };
     } else {
       ctx.body = {
@@ -144,7 +117,7 @@ class TestController extends Controller {
   }
 
   /**
-   * 需求：权限菜单-删除菜单
+   * 需求：用户-删除用户
    * 版本号：v1.0.0
    * 逻辑删除
    * 1，判断id是不是存在，存在让status变成0
@@ -155,11 +128,11 @@ class TestController extends Controller {
     if (!ctx.request.body.id) {
       ctx.body = {
         status: 501,
-        message: 'id不存在',
+        message: '用户-id不存在',
       };
       return false;
     }
-    const list = await this.app.mysql.update('deep_cate', {
+    const list = await this.app.mysql.update('user', {
       status: 0, // 是否可用
       id: ctx.request.body.id,
     });
@@ -167,7 +140,7 @@ class TestController extends Controller {
     if (list.affectedRows === 1) {
       ctx.body = {
         status: 200,
-        message: '删除成功',
+        message: '用户-删除成功',
       };
     } else {
       ctx.body = {

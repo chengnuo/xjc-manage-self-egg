@@ -15,6 +15,11 @@ module.exports = app => {
 
   apiRouter.post('/authMenu/list', controller.authMenu.list); // 权限菜单-列表
   apiRouter.post('/authMenu/create', controller.authMenu.create); // 权限菜单-新增
-  apiRouter.post('/authMenu/delete', controller.authMenu.delete); // 权限菜单-删除
   apiRouter.post('/authMenu/update', controller.authMenu.update); // 权限菜单-更新
+  apiRouter.post('/authMenu/delete', controller.authMenu.delete); // 权限菜单-删除
+
+  apiRouter.post('/authUser/list', controller.authUser.list); // 用户-列表
+  apiRouter.post('/authUser/create', controller.authUser.create); // 用户-新增
+  apiRouter.post('/authUser/update', controller.authUser.update); // 用户-更新
+  apiRouter.post('/authUser/delete', controller.authUser.delete); // 用户-删除
 };
