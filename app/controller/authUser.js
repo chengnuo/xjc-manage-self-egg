@@ -25,12 +25,19 @@ class TestController extends Controller {
         'username',
       ],
     });
-
+    // 时间输出有点问题，进行格式化
+    const listFormat = list.map((item)=>{
+      return {
+        ...item,
+        updated_time: moment(item.updated_time).format('YYYY-MM-DD hh:mm:ss'),
+        created_time: moment(item.created_time).format('YYYY-MM-DD hh:mm:ss'),
+      };
+    });
     ctx.body = {
       status: 200,
       message: '用户-列表',
       data: {
-        list: list,
+        list: listFormat,
       },
     };
   }
@@ -42,7 +49,6 @@ class TestController extends Controller {
    */
   async create() {
     const { ctx } = this;
-
     if (!ctx.request.body.username) {
       ctx.body = {
         status: 501,
@@ -81,7 +87,6 @@ class TestController extends Controller {
           message: '数据库错误',
         };
       }
-
     }
   }
   /**
@@ -90,7 +95,6 @@ class TestController extends Controller {
    */
   async update() {
     const { ctx } = this;
-
     if (!ctx.request.body.id) {
       ctx.body = {
         status: 501,
@@ -98,11 +102,9 @@ class TestController extends Controller {
       };
       return false;
     }
-
     const list = await this.app.mysql.update('user', {
       ...ctx.request.body,
     });
-
     if (list.affectedRows === 1) {
       ctx.body = {
         status: 200,
@@ -124,7 +126,6 @@ class TestController extends Controller {
    */
   async delete() {
     const { ctx } = this;
-
     if (!ctx.request.body.id) {
       ctx.body = {
         status: 501,
@@ -148,8 +149,6 @@ class TestController extends Controller {
         message: '数据库错误',
       };
     }
-
-
   }
 
 }
