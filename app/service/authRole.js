@@ -10,21 +10,17 @@ class TopicService extends Service {
   // 详情
   async show(params) {
     const result = await this.app.mysql.get('role', { id: params.id });
-
     return result;
   }
 
   // 列表
   async list(params) {
     const list = this.app.mysql.select('role', params);
-    // const total = this.app.mysql.count('role', params);
-    // this.checkSuccess(result);
     return list;
   }
   // 条数
   async total(params) {
     const total = this.app.mysql.count('role', params);
-    // this.checkSuccess(result);
     return total;
   }
 
@@ -42,8 +38,9 @@ class TopicService extends Service {
 
   // 删除
   async destroy(params) {
-    const result = await this.app.mysql.delete('role', {
+    const result = await this.app.mysql.update('role', {
       id: params.id,
+      status: 0,
     });
     return result;
   }
