@@ -11,6 +11,7 @@
 'use strict';
 
 const Controller = require('egg').Controller;
+const moment = require('moment');
 
 class TopicsController extends Controller {
   constructor(ctx) {
@@ -44,7 +45,9 @@ class TopicsController extends Controller {
     // console.log(ctx.params);
     // console.log(ctx.query);
 
-    const whereData = this.filterIndexWhereData(ctx.query); // 搜索关键词
+    const whereData = Object.assign({}, this.filterIndexWhereData(ctx.query), {
+      status: 1,
+    }); // 搜索关键词
     const pageSize = Number(ctx.query.pageSize) || 10; // 第几页
     const pageCurrent = Number(ctx.query.pageCurrent - 1) * Number(ctx.query.pageSize) || 0; // 每页几个
 
@@ -71,12 +74,21 @@ class TopicsController extends Controller {
 
     console.log('list', list);
 
+    // 时间输出有点问题，进行格式化
+    const listFormat = list.map((item)=>{
+      return {
+        ...item,
+        updated_time: moment(item.updated_time).format('YYYY-MM-DD hh:mm:ss'),
+        created_time: moment(item.created_time).format('YYYY-MM-DD hh:mm:ss'),
+      };
+    });
+
     if (list) {
       ctx.body = {
         status: 200,
         message: '获取列表',
         data: {
-          list,
+          list: listFormat,
           total,
         },
       };
@@ -137,12 +149,17 @@ class TopicsController extends Controller {
   }
 
   // 删除
-  async destroy() {
+  async delete() {
     const { ctx } = this;
-    const id = ctx.params.id;
-    const result = await ctx.service.authRole.destroy({
+    // const id = ctx.params.id;
+    const id = ctx.request.body.id;
+
+    const result = await ctx.service.authRole.delete({
       id,
     });
+
+    console.log('result', result)
+
     if (result.affectedRows === 1) {
       ctx.body = {
         status: 200,

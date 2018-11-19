@@ -1,6 +1,7 @@
 'use strict';
 
 const Service = require('egg').Service;
+const moment = require('moment');
 
 class TopicService extends Service {
   constructor(ctx) {
@@ -32,12 +33,16 @@ class TopicService extends Service {
 
   // 更新
   async update(params) {
-    const result = await this.app.mysql.update('role', params);
+    const result = await this.app.mysql.update('role',
+      Object.assign({}, params, {
+        updated_time : moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
+      })
+    );
     return result;
   }
 
   // 删除
-  async destroy(params) {
+  async delete(params) {
     const result = await this.app.mysql.update('role', {
       id: params.id,
       status: 0,

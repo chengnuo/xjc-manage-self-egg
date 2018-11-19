@@ -22,4 +22,10 @@ module.exports = app => {
   apiRouter.post('/authUser/create', controller.authUser.create); // 用户-新增
   apiRouter.post('/authUser/update', controller.authUser.update); // 用户-更新
   apiRouter.post('/authUser/delete', controller.authUser.delete); // 用户-删除
+
+
+  apiRouter.post('/authRole/list', controller.authRole.index); // 角色-列表
+  apiRouter.post('/authRole/create', controller.authRole.create); // 角色-新增
+  apiRouter.post('/authRole/update', controller.authRole.update); // 角色-更新
+  apiRouter.post('/authRole/delete', controller.authRole.delete); // 角色-删除
 };
