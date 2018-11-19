@@ -199,7 +199,8 @@ class TopicsController extends Controller {
     const list = await ctx.service.authRole.setAccessList(listData); // 列表
     const userAccessList = await this.app.mysql.select('role_access', {
       where: {
-        role_id: ctx.query.role_id,
+        // role_id: ctx.query.role_id,
+        role_id: ctx.request.body.role_id,
       },
     });
     const listFormat = list.map((item)=>{
@@ -210,7 +211,6 @@ class TopicsController extends Controller {
       };
     });
 
-    console.log('ctx.query', ctx.query.uid);
     console.log('userAccessList', userAccessList);
     if (list) {
       ctx.body = {

@@ -23,12 +23,15 @@ module.exports = app => {
   apiRouter.post('/authUser/update', controller.authUser.update); // 用户-更新
   apiRouter.post('/authUser/delete', controller.authUser.delete); // 用户-删除
 
+  apiRouter.post('/authUser/setRolesList', controller.authUser.setRolesList); // 用户-角色 user_role
+  apiRouter.post('/authUser/setRoles', controller.authUser.setRoles); // 用户-角色 user_role 设置角色
+
 
   apiRouter.post('/authRole/list', controller.authRole.index); // 角色-列表
   apiRouter.post('/authRole/create', controller.authRole.create); // 角色-新增
   apiRouter.post('/authRole/update', controller.authRole.update); // 角色-更新
   apiRouter.post('/authRole/delete', controller.authRole.delete); // 角色-删除
 
-  apiRouter.post('/authRole/setAccessList', controller.authRole.setAccessList); // 角色-设置权限列表
-  apiRouter.post('/authRole/setAccess', controller.authRole.setAccess); // 角色-设置权限
+  apiRouter.post('/authRole/setAccessList', controller.authRole.setAccessList); // 角色-权限 role_access
+  apiRouter.post('/authRole/setAccess', controller.authRole.setAccess); // 角色-权限 设置权限
 };
