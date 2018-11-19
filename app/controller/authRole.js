@@ -202,6 +202,13 @@ class TopicsController extends Controller {
         role_id: ctx.query.role_id,
       },
     });
+    const listFormat = list.map((item)=>{
+      return {
+        ...item,
+        updated_time: moment(item.updated_time).format('YYYY-MM-DD hh:mm:ss'),
+        created_time: moment(item.created_time).format('YYYY-MM-DD hh:mm:ss'),
+      };
+    });
 
     console.log('ctx.query', ctx.query.uid);
     console.log('userAccessList', userAccessList);
@@ -210,7 +217,7 @@ class TopicsController extends Controller {
         status: 200,
         message: '获取列表',
         data: {
-          list,
+          list: listFormat,
           userAccessList,
         },
       };
@@ -234,12 +241,22 @@ class TopicsController extends Controller {
     });
 
     const list = await ctx.service.authRole.setAccess(ctx.request.body); // 列表
+
+    const listFormat = list.map((item)=>{
+      return {
+        ...item,
+        updated_time: moment(item.updated_time).format('YYYY-MM-DD hh:mm:ss'),
+        created_time: moment(item.created_time).format('YYYY-MM-DD hh:mm:ss'),
+      };
+    });
+
+
     if (list) {
       ctx.body = {
         status: 200,
         message: '权限设置成功',
         data: {
-          list,
+          list: listFormat,
         },
       };
     } else {

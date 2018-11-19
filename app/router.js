@@ -28,4 +28,7 @@ module.exports = app => {
   apiRouter.post('/authRole/create', controller.authRole.create); // 角色-新增
   apiRouter.post('/authRole/update', controller.authRole.update); // 角色-更新
   apiRouter.post('/authRole/delete', controller.authRole.delete); // 角色-删除
+
+  apiRouter.post('/authRole/setAccessList', controller.authRole.setAccessList); // 角色-设置权限列表
+  apiRouter.post('/authRole/setAccess', controller.authRole.setAccess); // 角色-设置权限
 };
