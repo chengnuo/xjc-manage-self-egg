@@ -25,33 +25,36 @@ class TestController extends Controller {
   async list() {
     const { ctx } = this;
 
-    const whereData = this.filterIndexWhereData(ctx.query); // 搜索关键词
+    const whereData = this.filterIndexWhereData(ctx.request.body); // 搜索关键词
     const pageSize = Number(ctx.request.body.pageSize) || 10; // 第几页
     const pageCurrent = Number(ctx.request.body.pageCurrent - 1) * Number(ctx.request.body.pageSize) || 0; // 每页几个
 
 
     console.log('pageSize', pageSize)
 
-    const list = await this.app.mysql.select('user', {
-      where: {
-        ...whereData,
-        status: 1, // 是否可用
-      },
-      columns: [
-        'id',
-        'name',
-        'email',
-        'is_admin',
-        'status',
-        'updated_time',
-        'created_time',
-        'username',
-      ],
-      limit: pageSize, // 返回数据量
-      offset: pageCurrent, // 数据偏移量
-    });
+    // const list = await this.app.mysql.select('user', {
+    //   where: {
+    //     ...whereData,
+    //     status: 1, // 是否可用
+    //   },
+    //   columns: [
+    //     'id',
+    //     'name',
+    //     'email',
+    //     'is_admin',
+    //     'status',
+    //     'updated_time',
+    //     'created_time',
+    //     'username',
+    //   ],
+    //   limit: pageSize, // 返回数据量
+    //   offset: pageCurrent, // 数据偏移量
+    // });
 
-    const total = await this.app.mysql.count('user', whereData);
+
+    // const total = await this.app.mysql.count('user', whereData);
+    const list = await ctx.service.authUser.list(whereData);
+    const total = await ctx.service.authUser.total(whereData);
 
 
     console.log('total', total)
