@@ -45,11 +45,11 @@ class TopicsController extends Controller {
     // console.log(ctx.params);
     // console.log(ctx.query);
 
-    const whereData = Object.assign({}, this.filterIndexWhereData(ctx.query), {
+    const whereData = Object.assign({}, this.filterIndexWhereData(ctx.request.body), {
       status: 1,
     }); // 搜索关键词
-    const pageSize = Number(ctx.query.pageSize) || 10; // 第几页
-    const pageCurrent = Number(ctx.query.pageCurrent - 1) * Number(ctx.query.pageSize) || 0; // 每页几个
+    const pageSize = Number(ctx.request.body.pageSize) || 10; // 第几页
+    const pageCurrent = Number(ctx.request.body.pageCurrent - 1) * Number(ctx.request.body.pageSize) || 0; // 每页几个
 
     console.log('pageCurrent', pageCurrent);
     // 列表搜索数据
