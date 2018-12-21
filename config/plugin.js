@@ -26,3 +26,9 @@ exports.security = {
   enable: true,
   package: 'egg-security',
 };
+
+// {app_root}/config/plugin.js
+exports.cors = {
+  enable: true,
+  package: 'egg-cors',
+};

@@ -4,14 +4,37 @@ const Controller = require('egg').Controller;
 const moment = require('moment');
 
 class TestController extends Controller {
+  filterIndexWhereData(ctxQuery) {
+    const whereData = {};
+    let i = 0;
+    for (i in ctxQuery) {
+      if (i === 'pageCurrent') {
+        continue;
+      } else if (i === 'pageSize') {
+        continue;
+      } else {
+        whereData[i] = ctxQuery[i];
+      }
+    }
+    return whereData;
+  }
   /**
    * 需求：用户-列表
    * 版本号：v1.0.0
    */
   async list() {
     const { ctx } = this;
+
+    const whereData = this.filterIndexWhereData(ctx.query); // 搜索关键词
+    const pageSize = Number(ctx.request.body.pageSize) || 10; // 第几页
+    const pageCurrent = Number(ctx.request.body.pageCurrent - 1) * Number(ctx.request.body.pageSize) || 0; // 每页几个
+
+
+    console.log('pageSize', pageSize)
+
     const list = await this.app.mysql.select('user', {
       where: {
+        ...whereData,
         status: 1, // 是否可用
       },
       columns: [
@@ -24,7 +47,15 @@ class TestController extends Controller {
         'created_time',
         'username',
       ],
+      limit: pageSize, // 返回数据量
+      offset: pageCurrent, // 数据偏移量
     });
+
+    const total = await this.app.mysql.count('user', whereData);
+
+
+    console.log('total', total)
+
     // 时间输出有点问题，进行格式化
     const listFormat = list.map((item)=>{
       return {
@@ -38,6 +69,7 @@ class TestController extends Controller {
       message: '用户-列表',
       data: {
         list: listFormat,
+        total: total,
       },
     };
   }

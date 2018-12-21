@@ -9,8 +9,9 @@ function fn(data, pid) {
   for (let i = 0; i < data.length; i++) {
     if (data[i].pid == pid) {
       let obj = {
+        ...data[i],
         name: data[i].name,
-        id: data[i].id
+        id: data[i].id,
       };
       temp = fn(data, data[i].id);
 
@@ -37,7 +38,7 @@ class TestController extends Controller {
       where: {
         status: 1, // 是否可用
       },
-      columns: [ 'id', 'pid', 'name' ],
+      columns: [ 'id', 'pid', 'name', 'title', 'path' ],
     });
     let fnList = fn(list, 0)
 
@@ -59,14 +60,14 @@ class TestController extends Controller {
   async create() {
     const { ctx } = this;
 
-    if (!ctx.request.body.name) {
+    if (!ctx.request.body.title) {
       ctx.body = {
         status: 501,
         message: '请输入菜单名称',
       };
       return false;
     }
-    if (!ctx.request.body.pid) {
+    if (!ctx.request.body.pid && ctx.request.body.pid !=0) {
       ctx.body = {
         status: 501,
         message: 'pid不存在',
@@ -76,7 +77,7 @@ class TestController extends Controller {
 
     const list = await this.app.mysql.get('deep_cate', {
       status: 1, // 是否可用
-      name: ctx.request.body.name,
+      name: ctx.request.body.title,
     });
     if (list) {
       ctx.body = {
@@ -85,6 +86,7 @@ class TestController extends Controller {
       };
     } else {
       const result = await this.app.mysql.insert('deep_cate', {
+        title: ctx.request.body.title,
         name: ctx.request.body.name,
         pid: ctx.request.body.pid,
       });
@@ -117,7 +119,7 @@ class TestController extends Controller {
       return false;
     }
 
-    if (!ctx.request.body.name) {
+    if (!ctx.request.body.title) {
       ctx.body = {
         status: 501,
         message: '菜单名称不存在',
@@ -127,6 +129,7 @@ class TestController extends Controller {
 
     const list = await this.app.mysql.update('deep_cate', {
       name: ctx.request.body.name,
+      title: ctx.request.body.title,
       id: ctx.request.body.id,
     });
 

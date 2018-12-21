@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "egg": "^2.2.1",
+    "egg-cors": "^2.1.2",
     "egg-jwt": "^3.1.4",
     "egg-mysql": "^3.0.0",
     "egg-router-plus": "^1.3.0",
