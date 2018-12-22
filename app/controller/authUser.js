@@ -65,6 +65,7 @@ class TestController extends Controller {
         ...item,
         updated_time: moment(item.updated_time).format('YYYY-MM-DD hh:mm:ss'),
         created_time: moment(item.created_time).format('YYYY-MM-DD hh:mm:ss'),
+        rolenameId: item.rolenameId && item.rolenameId.split(',') || [],
       };
     });
     ctx.body = {
