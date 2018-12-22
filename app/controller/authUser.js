@@ -26,8 +26,8 @@ class TestController extends Controller {
     const { ctx } = this;
 
     const whereData = this.filterIndexWhereData(ctx.request.body); // 搜索关键词
-    const pageSize = Number(ctx.request.body.pageSize) || 10; // 第几页
     const pageCurrent = Number(ctx.request.body.pageCurrent - 1) * Number(ctx.request.body.pageSize) || 0; // 每页几个
+    const pageSize = Number(ctx.request.body.pageSize) || 10; // 第几页
 
 
     console.log('pageSize', pageSize)
@@ -53,7 +53,7 @@ class TestController extends Controller {
 
 
     // const total = await this.app.mysql.count('user', whereData);
-    const list = await ctx.service.authUser.list(whereData);
+    const list = await ctx.service.authUser.list(whereData, pageCurrent, pageSize);
     const total = await ctx.service.authUser.total(whereData);
 
 
@@ -205,7 +205,7 @@ class TestController extends Controller {
         // 'username',
       ],
     };
-    const list = await ctx.service.users.setRolesList(listData); // 列表
+    const list = await ctx.service.authUser.setRolesList(listData); // 列表
     const userRoleList = await this.app.mysql.select('user_role', {
       where: {
         // uid: ctx.query.uid,
@@ -213,14 +213,56 @@ class TestController extends Controller {
       },
     });
 
-    console.log('userRoleList', userRoleList);
+    // 角色列表
+    const listFormat = list.map((item)=>{
+      return {
+        ...item,
+        updated_time: moment(item.updated_time).format('YYYY-MM-DD hh:mm:ss'),
+        created_time: moment(item.created_time).format('YYYY-MM-DD hh:mm:ss'),
+      };
+    });
+
+
+    // 角色-权限
+    const userRoleFormat = userRoleList.map((item)=>{
+      let roleName = '';
+      list.map((listItem)=>{
+        if(listItem.id == item.role_id){
+          roleName = listItem.name;
+        }
+      });
+      return {
+        ...item,
+        updated_time: moment(item.updated_time).format('YYYY-MM-DD hh:mm:ss'),
+        created_time: moment(item.created_time).format('YYYY-MM-DD hh:mm:ss'),
+        roleName: roleName, // 权限名字
+      };
+    });
+
+    // 7，权限API GROUP_CONCAT  group_concat
+    const roleNames = await this.app.mysql.query(`
+      SELECT us.*, GROUP_CONCAT(ro.name SEPARATOR ',') AS rolename
+      FROM user us 
+      LEFT JOIN user_role ug 
+      ON us.id = ug.uid 
+      LEFT JOIN role ro
+      ON ug.role_id = ro.id
+      GROUP BY us.id
+    `);
+    // ,GROUP_CONCAT(gs.name SEPARATOR ' | ') AS name
+    // GROUP BY ug.id
+
+
+    console.log('roleNames', roleNames);
     if (list) {
       ctx.body = {
         status: 200,
-        message: '获取列表',
+        message: '获取角色',
         data: {
-          list,
-          userRoleList,
+          // list: listFormat,
+          // userRoleList: userRoleFormat,
+          roleNames,
+
         },
       };
     } else {
@@ -242,7 +284,7 @@ class TestController extends Controller {
       uid: ctx.request.body[0].uid,
     });
 
-    const list = await ctx.service.users.setRoles(ctx.request.body); // 列表
+    const list = await ctx.service.authUser.setRoles(ctx.request.body); // 列表
     if (list) {
       ctx.body = {
         status: 200,
