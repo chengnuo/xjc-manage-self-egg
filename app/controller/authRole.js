@@ -186,13 +186,13 @@ class TopicsController extends Controller {
       columns: [
         'id',
         'title',
-        'urls',
+        'pid',
         'status',
         // 'email',
         // 'is_admin',
         // 'status',
-        'updated_time',
-        'created_time',
+        // 'updated_time',
+        // 'created_time',
         // 'username',
       ],
     };
@@ -206,8 +206,8 @@ class TopicsController extends Controller {
     const listFormat = list.map((item)=>{
       return {
         ...item,
-        updated_time: moment(item.updated_time).format('YYYY-MM-DD hh:mm:ss'),
-        created_time: moment(item.created_time).format('YYYY-MM-DD hh:mm:ss'),
+        // updated_time: moment(item.updated_time).format('YYYY-MM-DD hh:mm:ss'),
+        // created_time: moment(item.created_time).format('YYYY-MM-DD hh:mm:ss'),
       };
     });
 
@@ -242,21 +242,13 @@ class TopicsController extends Controller {
 
     const list = await ctx.service.authRole.setAccess(ctx.request.body); // 列表
 
-    const listFormat = list.map((item)=>{
-      return {
-        ...item,
-        updated_time: moment(item.updated_time).format('YYYY-MM-DD hh:mm:ss'),
-        created_time: moment(item.created_time).format('YYYY-MM-DD hh:mm:ss'),
-      };
-    });
-
 
     if (list) {
       ctx.body = {
         status: 200,
         message: '权限设置成功',
         data: {
-          list: listFormat,
+          list: list,
         },
       };
     } else {

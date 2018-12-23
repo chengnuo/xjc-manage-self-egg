@@ -34,7 +34,7 @@ class TestController extends Controller {
    */
   async list() {
     const { ctx } = this;
-    const list = await this.app.mysql.select('deep_cate', {
+    const list = await this.app.mysql.select('access', {
       where: {
         status: 1, // 是否可用
       },
@@ -75,7 +75,7 @@ class TestController extends Controller {
       return false;
     }
 
-    const list = await this.app.mysql.get('deep_cate', {
+    const list = await this.app.mysql.get('access', {
       status: 1, // 是否可用
       name: ctx.request.body.title,
     });
@@ -85,7 +85,7 @@ class TestController extends Controller {
         message: '菜单名称已经存在，请重新选择菜单名称',
       };
     } else {
-      const result = await this.app.mysql.insert('deep_cate', {
+      const result = await this.app.mysql.insert('access', {
         title: ctx.request.body.title,
         name: ctx.request.body.name,
         pid: ctx.request.body.pid,
@@ -127,7 +127,7 @@ class TestController extends Controller {
       return false;
     }
 
-    const list = await this.app.mysql.update('deep_cate', {
+    const list = await this.app.mysql.update('access', {
       name: ctx.request.body.name,
       title: ctx.request.body.title,
       id: ctx.request.body.id,
@@ -162,7 +162,7 @@ class TestController extends Controller {
       };
       return false;
     }
-    const list = await this.app.mysql.update('deep_cate', {
+    const list = await this.app.mysql.update('access', {
       status: 0, // 是否可用
       id: ctx.request.body.id,
     });
