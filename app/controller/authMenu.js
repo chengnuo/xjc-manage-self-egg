@@ -38,7 +38,7 @@ class TestController extends Controller {
       where: {
         status: 1, // 是否可用
       },
-      columns: [ 'id', 'pid', 'name', 'path' ],
+      columns: [ 'id', 'pid', 'name', 'path', 'menuname' ],
     });
     let fnList = fn(list, 0)
 
@@ -87,6 +87,7 @@ class TestController extends Controller {
     } else {
       const result = await this.app.mysql.insert('access', {
         name: ctx.request.body.name,
+        menuname: ctx.request.body.menuname,
         path: ctx.request.body.path,
         pid: ctx.request.body.pid,
       });
@@ -129,6 +130,7 @@ class TestController extends Controller {
 
     const list = await this.app.mysql.update('access', {
       name: ctx.request.body.name,
+      menuname: ctx.request.body.menuname,
       path: ctx.request.body.path,
       id: ctx.request.body.id,
     });

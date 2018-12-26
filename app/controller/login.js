@@ -238,7 +238,7 @@ class TestController extends Controller {
 
     if (filterRoleAccess.length > 0) {
       // 7，权限Menu
-      accessMenu = await this.app.mysql.query(`SELECT access.id, access.path, access.name, access.pid FROM access LEFT JOIN role_access ON access.id=role_access.role_id WHERE (${filterRoleAccess.join('')}) group by id`);
+      accessMenu = await this.app.mysql.query(`SELECT access.id, access.path, access.menuname, access.name, access.pid FROM access LEFT JOIN role_access ON access.id=role_access.role_id WHERE (${filterRoleAccess.join('')}) group by id`);
 
       farmatAccessMenu = accessMenuFn(accessMenu, 0)
 
