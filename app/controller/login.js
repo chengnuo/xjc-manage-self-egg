@@ -83,6 +83,7 @@ class TestController extends Controller {
             message: '登录成功',
             status: 200,
             token,
+            id: uersResult.id,
           };
         } else {
           ctx.body = {
@@ -165,8 +166,8 @@ class TestController extends Controller {
       });
 
       if (token) {
-        const result = await this.app.mysql.delete('user', {
-          token: token.token,
+        const result = await this.app.mysql.update('user', {
+          token: null,
         });
         if (result.affectedRows === 1) {
           ctx.body = {
