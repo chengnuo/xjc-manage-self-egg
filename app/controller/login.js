@@ -5,6 +5,30 @@ const Controller = require('egg').Controller;
 // const LocalStrategy = require('passport-local').Strategy;
 const moment = require('moment');
 
+
+function accessMenuFn(data, pid) {
+  let result = [];
+  let temp = [];
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].pid == pid) {
+      let obj = {
+        ...data[i],
+        name: data[i].name,
+        id: data[i].id,
+      };
+      temp = accessMenuFn(data, data[i].id);
+
+      console.log('temp', temp)
+
+      if (temp.length > 0) {
+        obj.children = temp;
+      }
+      result.push(obj);
+    }
+  }
+  return result;
+}
+
 class TestController extends Controller {
   /**
    * 需求：用户登录
@@ -56,26 +80,26 @@ class TestController extends Controller {
           });
           ctx.session.uersResult = uersResult; // 缓存用户信息
           ctx.body = {
-            message: `登录成功`,
+            message: '登录成功',
             status: 200,
             token,
           };
         } else {
           ctx.body = {
-            message: `登录失败，服务器错误`,
+            message: '登录失败，服务器错误',
             status: 413,
             token,
           };
         }
       } else {
         ctx.body = {
-          message: `密码错误`,
+          message: '密码错误',
           status: 412,
         };
       }
     } else {
       ctx.body = {
-        message: `用户不存在`,
+        message: '用户不存在',
         status: 403,
       };
     }
@@ -84,7 +108,7 @@ class TestController extends Controller {
   /**
    * 需求： 判断是否登录
    * 版本号：v1.0.0
-   * @returns {Promise.<void>}
+   * @return {Promise.<void>}
    */
   async isSignIn() {
     const ctx = this.ctx;
@@ -106,7 +130,7 @@ class TestController extends Controller {
   /**
    * 需求： 获取id
    * 版本号：v1.0.0
-   * @returns {Promise.<void>}
+   * @return {Promise.<void>}
    */
   async getUserId() {
     const ctx = this.ctx;
@@ -171,6 +195,68 @@ class TestController extends Controller {
 
 
     // ctx.logout();
+
+  }
+
+  // 登录之后获取权限菜单
+  async getMenuList() {
+    const ctx = this.ctx;
+    // 角色
+    const resultUserRole = await this.app.mysql.select('user_role', {
+      where: {
+        uid: ctx.request.body.id,
+      },
+    });
+
+
+    // 过滤
+    const filterUserRole = resultUserRole.map((item, index) => {
+      return `${item.role_id}`;
+    });
+
+
+    // 5,权限
+    const resultRoleAccess = await this.app.mysql.select('role_access', {
+      where: {
+        role_id: filterUserRole,
+      },
+    });
+
+    const filterRoleAccess = resultRoleAccess.map((item, index) => {
+      if (resultRoleAccess.length - 1 === index) {
+        return `access.id=${item.access_id}`;
+      }
+      return `access.id=${item.access_id} || `;
+
+    });
+
+    console.log('filterRoleAccess', filterRoleAccess);
+
+    let accessMenu = [];
+    let farmatAccessMenu = [];
+
+
+    if (filterRoleAccess.length > 0) {
+      // 7，权限Menu
+      accessMenu = await this.app.mysql.query(`SELECT access.id, access.path, access.name, access.pid FROM access LEFT JOIN role_access ON access.id=role_access.role_id WHERE (${filterRoleAccess.join('')}) group by id`);
+
+      farmatAccessMenu = accessMenuFn(accessMenu, 0)
+
+      ctx.body = {
+        status: 200,
+        message: '登录菜单',
+        accessMenu,
+        farmatAccessMenu,
+      };
+    } else {
+      ctx.body = {
+        status: 200,
+        message: '登录菜单',
+        accessMenu,
+        farmatAccessMenu,
+      };
+    }
+
 
   }
 }

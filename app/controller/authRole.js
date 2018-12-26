@@ -185,9 +185,10 @@ class TopicsController extends Controller {
     const listData = {
       columns: [
         'id',
-        'title',
+        'name',
         'pid',
         'status',
+        'path',
         // 'email',
         // 'is_admin',
         // 'status',

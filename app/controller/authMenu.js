@@ -38,7 +38,7 @@ class TestController extends Controller {
       where: {
         status: 1, // 是否可用
       },
-      columns: [ 'id', 'pid', 'name', 'title', 'path' ],
+      columns: [ 'id', 'pid', 'name', 'path' ],
     });
     let fnList = fn(list, 0)
 
@@ -60,7 +60,7 @@ class TestController extends Controller {
   async create() {
     const { ctx } = this;
 
-    if (!ctx.request.body.title) {
+    if (!ctx.request.body.name) {
       ctx.body = {
         status: 501,
         message: '请输入菜单名称',
@@ -77,7 +77,7 @@ class TestController extends Controller {
 
     const list = await this.app.mysql.get('access', {
       status: 1, // 是否可用
-      name: ctx.request.body.title,
+      name: ctx.request.body.name,
     });
     if (list) {
       ctx.body = {
@@ -86,8 +86,8 @@ class TestController extends Controller {
       };
     } else {
       const result = await this.app.mysql.insert('access', {
-        title: ctx.request.body.title,
         name: ctx.request.body.name,
+        path: ctx.request.body.path,
         pid: ctx.request.body.pid,
       });
       if (result) {
@@ -119,7 +119,7 @@ class TestController extends Controller {
       return false;
     }
 
-    if (!ctx.request.body.title) {
+    if (!ctx.request.body.name) {
       ctx.body = {
         status: 501,
         message: '菜单名称不存在',
@@ -129,7 +129,7 @@ class TestController extends Controller {
 
     const list = await this.app.mysql.update('access', {
       name: ctx.request.body.name,
-      title: ctx.request.body.title,
+      path: ctx.request.body.path,
       id: ctx.request.body.id,
     });
 
