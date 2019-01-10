@@ -8,7 +8,11 @@ module.exports = app => {
   router.get('/', controller.home.index);
 
   const apiRouter = app.router.namespace('/api'); // api作为前缀
+
+  const auth = app.middleware.auth(app);
+
   apiRouter.post('/signIn', controller.login.signIn); // 登入
+  apiRouter.post('/home', auth, controller.home.index); // 测试
   apiRouter.post('/isSignIn', controller.login.isSignIn); // 判断是都登录
   apiRouter.post('/getUserId', controller.login.getUserId); // 获取用户id
   apiRouter.post('/signOut', controller.login.signOut); // 登出
