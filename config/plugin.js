@@ -21,10 +21,10 @@ exports.mysql = {
 };
 
 // 校验登录
-exports.jwt = {
-  enable: true,
-  package: "egg-jwt",
-};
+// exports.jwt = {
+//   enable: true,
+//   package: "egg-jwt",
+// };
 
 // 解决 invalid csrf token
 exports.security = {
