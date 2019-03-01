@@ -46,19 +46,20 @@ module.exports = () => {
         }
       }
       // 重置cookie时间
-      ctx.cookies.set('token', token, {
-        maxAge: 60 * 1000,
-        httpOnly: false,
-        overwrite: true,
-        signed: false,
-      });
+      // ctx.cookies.set('token', token, {
+      //   maxAge: 60 * 1000,
+      //   httpOnly: false,
+      //   overwrite: true,
+      //   signed: false,
+      // });
       await next();
     } else {
-      ctx.status = 401;
-      ctx.body = {
-        message: '没有token',
-      };
-      return;
+      await next(); // 测试阶段，直接通过
+      // ctx.status = 401;
+      // ctx.body = {
+      //   message: '没有token',
+      // };
+      // return;
     }
   };
 };

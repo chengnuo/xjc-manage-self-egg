@@ -75,6 +75,8 @@ class HomeController extends Controller {
    */
   async signOut() {
     const { ctx } = this;
+    ctx.cookies.set('token', null);
+
     ctx.body = {
       message: '登出成功',
       status: 200,
