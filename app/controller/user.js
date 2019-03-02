@@ -60,7 +60,9 @@ class TopicsController extends Controller {
       offset: pageCurrent, // 数据偏移量
       where: whereData,
     };
-    const list = await ctx.service.user.list(listData); // 列表
+    // const list = await ctx.service.user.list(listData); // 列表
+
+    const list = await ctx.service.user.list(whereData, pageCurrent, pageSize);
     const total = await ctx.service.user.total(whereData); // 条数
 
     if (list) {
