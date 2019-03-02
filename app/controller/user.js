@@ -42,8 +42,8 @@ class TopicsController extends Controller {
   async index() {
     const { ctx } = this;
     const whereData = ctx.helper.filterIndexWhereData(ctx.query); // 搜索关键词
-    const pageSize = Number(ctx.query.pageSize) || 10; // 第几页
-    const pageCurrent = Number(ctx.query.pageCurrent - 1) * Number(ctx.query.pageSize) || 0; // 每页几个
+    const pageCurrent = Number(ctx.query.pageCurrent - 1) * Number(ctx.query.pageSize) || 0; // 第几页
+    const pageSize = Number(ctx.query.pageSize) || 10; // 每页几个
     // 列表搜索数据
     const listData = {
       columns: [
