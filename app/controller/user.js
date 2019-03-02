@@ -138,10 +138,13 @@ class TopicsController extends Controller {
   // 删除
   async destroy() {
     const { ctx } = this;
-    const id = ctx.params.ids;
+    const id = ctx.params.id;
     const result = await ctx.service.user.destroy({
       id,
     });
+
+    console.log('result', result)
+
     if (result.affectedRows === 1) {
       ctx.body = {
         status: 200,
