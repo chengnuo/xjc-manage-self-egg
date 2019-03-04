@@ -22,4 +22,7 @@ module.exports = app => {
   // 角色模块
   app.router.delete('role', '/api/v1/role', app.controller.role.delete); // 拓展多个删除
   app.router.resources('role', '/api/v1/role', checktoken, app.controller.role); // restful
+  // 权限模块
+  app.router.delete('access', '/api/v1/access', app.controller.access.delete); // 拓展多个删除
+  app.router.resources('access', '/api/v1/access', checktoken, app.controller.access); // restful
 };

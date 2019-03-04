@@ -21,20 +21,20 @@ class TopicsController extends Controller {
   // 详情
   async show() {
     const { ctx } = this;
-    const result = await ctx.service.role.show({
+    const result = await ctx.service.access.show({
       id: ctx.params.id,
     });
 
     if (result) {
       ctx.body = {
         status: 200,
-        message: '角色-详情',
+        message: '权限-详情',
         data: result,
       };
     } else {
       ctx.body = {
         status: 500,
-        message: '角色-详情不存在',
+        message: '权限-详情不存在',
       };
     }
   }
@@ -48,26 +48,29 @@ class TopicsController extends Controller {
     const listData = {
       columns: [
         'id',
-        'name',
+        'pid',
+        'menuname',
+        // 'type',  // api menu button
         'status',
         // 'email',
         // 'is_admin',
         // 'status',
         'updated_time',
         'created_time',
+        'path',
         // 'username',
       ],
       limit: pageSize, // 返回数据量
       offset: pageCurrent, // 数据偏移量
       where: whereData,
     };
-    const list = await ctx.service.role.list(listData); // 列表
-    const total = await ctx.service.role.total(whereData); // 条数
+    const list = await ctx.service.access.list(listData); // 列表
+    const total = await ctx.service.access.total(whereData); // 条数
 
     console.log('list', list);
 
     if (list) {
-      const listFormat = list.map((item)=>{
+      const listFormat = list.map(item => {
         return {
           ...item,
           updated_time: moment(item.updated_time).format('YYYY-MM-DD hh:mm:ss'),
@@ -85,7 +88,7 @@ class TopicsController extends Controller {
     } else {
       ctx.body = {
         status: 201,
-        message: '角色-列表不存在',
+        message: '权限-列表不存在',
       };
     }
 
@@ -95,17 +98,18 @@ class TopicsController extends Controller {
   // 新增
   async create() {
     const { ctx } = this;
-    const result = await this.app.mysql.get('role', { name: ctx.request.body.name });
+    const result = await this.app.mysql.get('user', { name: ctx.request.body.name });
+    console.log('result', result);
     if (result && result.name === ctx.request.body.name) {
       ctx.body = {
         status: 201,
-        message: '角色名已存在，请使用其他角色名',
+        message: '权限名已存在，请使用其他权限名',
       };
     } else {
-      const id = await ctx.service.role.create(ctx.request.body);
+      const id = await ctx.service.access.create(ctx.request.body);
       ctx.body = {
         status: 200,
-        message: '角色-新增',
+        message: '权限-新增',
         data: id,
       };
     }
@@ -115,11 +119,14 @@ class TopicsController extends Controller {
   async update() {
     const { ctx } = this;
     const id = ctx.params.id;
-    const result = await ctx.service.role.update(Object.assign({ id }, ctx.request.body));
+    const result = await ctx.service.access.update(Object.assign({ id }, ctx.request.body));
+
+    console.log('result', result);
+
     if (result.affectedRows === 1) {
       ctx.body = {
         status: 200,
-        message: '角色-编辑成功',
+        message: '权限-编辑成功',
         data: {
           id,
         },
@@ -127,7 +134,7 @@ class TopicsController extends Controller {
     } else {
       ctx.body = {
         status: 201,
-        message: '角色-编辑失败',
+        message: '权限-编辑失败',
       };
     }
 
@@ -137,13 +144,13 @@ class TopicsController extends Controller {
   async destroy() {
     const { ctx } = this;
     const id = ctx.params.id;
-    const result = await ctx.service.role.destroy({
+    const result = await ctx.service.access.destroy({
       id,
     });
     if (result.affectedRows === 1) {
       ctx.body = {
         status: 200,
-        message: '角色-删除成功',
+        message: '权限-删除成功',
         data: {
           id,
         },
@@ -151,7 +158,7 @@ class TopicsController extends Controller {
     } else {
       ctx.body = {
         status: 201,
-        message: '角色-删除失败',
+        message: '权限-删除失败',
       };
     }
   }
@@ -161,73 +168,8 @@ class TopicsController extends Controller {
     const { ctx } = this;
     ctx.body = {
       status: 200,
-      message: '批量删除正在开发',
+      message: '权限-批量删除正在开发',
     };
-  }
-
-
-  // 权限列表
-  async setAccessList() {
-    const { ctx } = this;
-    // 列表搜索数据
-    const listData = {
-      columns: [
-        'id',
-        'title',
-        'urls',
-        'status',
-        // 'email',
-        // 'is_admin',
-        // 'status',
-        'updated_time',
-        'created_time',
-        // 'username',
-      ],
-    };
-    const list = await ctx.service.role.setAccessList(listData); // 列表
-    const userAccessList = await this.app.mysql.select('role_access', {
-      where: {
-        role_id: ctx.query.role_id,
-      },
-    });
-    if (list) {
-      ctx.body = {
-        status: 200,
-        message: '获取列表',
-        data: {
-          list,
-          userAccessList,
-        },
-      };
-    } else {
-      ctx.body = {
-        status: 201,
-        message: '权限-列表不存在',
-      };
-    }
-  }
-  // 设置权限
-  async setAccess() {
-    const { ctx } = this;
-    const result = await this.app.mysql.delete('role_access', {
-      role_id: ctx.request.body[0].role_id,
-    });
-
-    const list = await ctx.service.role.setAccess(ctx.request.body); // 列表
-    if (list) {
-      ctx.body = {
-        status: 200,
-        message: '权限设置成功',
-        data: {
-          list,
-        },
-      };
-    } else {
-      ctx.body = {
-        status: 201,
-        message: '权限不存在',
-      };
-    }
   }
 }
 
