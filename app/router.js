@@ -19,4 +19,7 @@ module.exports = app => {
   // 用户模块
   app.router.delete('user', '/api/v1/user', app.controller.user.delete); // 拓展多个删除
   app.router.resources('user', '/api/v1/user', checktoken, app.controller.user); // restful
+  // 角色模块
+  app.router.delete('role', '/api/v1/role', app.controller.role.delete); // 拓展多个删除
+  app.router.resources('role', '/api/v1/role', checktoken, app.controller.role); // restful
 };
