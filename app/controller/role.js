@@ -188,7 +188,7 @@ class TopicsController extends Controller {
         'name',
         'pid',
         'status',
-        'path',
+        'url',
         // 'email',
         // 'is_admin',
         // 'status',
