@@ -15,6 +15,8 @@ class TopicService extends Service {
   // 列表
   async list(params, pageCurrent, pageSize) {
 
+    console.log('params', params)
+
     const QUERY_STR = 'us.id, us.name, us.email, us.is_admin, us.status, us.updated_time, us.created_time, us.username';
     const roleNames = await this.app.mysql.query(`
       SELECT ${QUERY_STR}, GROUP_CONCAT(ro.name SEPARATOR ',') AS rolename, GROUP_CONCAT(ro.id SEPARATOR ',') AS rolenameId

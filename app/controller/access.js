@@ -1,166 +1,187 @@
-/**
- * Method	Path	Route Name	Controller.Action
- * GET	/posts	posts	app.controllers.posts.index
- * GET	/posts/new	new_post	app.controllers.posts.new
- * GET	/posts/:id	post	app.controllers.posts.show
- * GET	/posts/:id/edit	edit_post	app.controllers.posts.edit
- * POST	/posts	posts	app.controllers.posts.create
- * PUT	/posts/:id	post	app.controllers.posts.update
- * DELETE	/posts/:id	post	app.controllers.posts.destroy
- */
 'use strict';
 
 const Controller = require('egg').Controller;
 const moment = require('moment');
 
-class TopicsController extends Controller {
-  constructor(ctx) {
-    super(ctx);
-  }
-
-  // 详情
-  async show() {
-    const { ctx } = this;
-    const result = await ctx.service.access.show({
-      id: ctx.params.id,
-    });
-
-    if (result) {
-      ctx.body = {
-        status: 200,
-        message: '权限-详情',
-        data: result,
+function fn(data, pid) {
+  let result = [];
+  let temp = [];
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].pid == pid) {
+      let obj = {
+        ...data[i],
+        name: data[i].name,
+        id: data[i].id,
       };
-    } else {
-      ctx.body = {
-        status: 500,
-        message: '权限-详情不存在',
-      };
+      temp = fn(data, data[i].id);
+
+      console.log('temp', temp)
+
+      if (temp.length > 0) {
+        obj.children = temp;
+      }
+      result.push(obj);
     }
   }
-  // 列表
+  return result;
+}
+
+
+class TestController extends Controller {
+  /**
+   * 需求：权限菜单-列表
+   * 版本号：v1.0.0
+   */
   async index() {
     const { ctx } = this;
-    const whereData = ctx.helper.filterIndexWhereData(ctx.query); // 搜索关键词
-    const pageSize = Number(ctx.query.pageSize) || 10; // 第几页
-    const pageCurrent = Number(ctx.query.pageCurrent - 1) * Number(ctx.query.pageSize) || 0; // 每页几个
-    // 列表搜索数据
-    const listData = {
-      columns: [
-        'id',
-        'pid',
-        'menuname',
-        // 'type',  // api menu button
-        'status',
-        // 'email',
-        // 'is_admin',
-        // 'status',
-        'updated_time',
-        'created_time',
-        'path',
-        // 'username',
-      ],
-      limit: pageSize, // 返回数据量
-      offset: pageCurrent, // 数据偏移量
-      where: whereData,
+    const list = await this.app.mysql.select('access', {
+      where: {
+        status: 1, // 是否可用
+      },
+      columns: [ 'id', 'pid', 'name', 'path', 'menuname' ],
+    });
+    let fnList = fn(list, 0)
+
+    ctx.body = {
+      status: 200,
+      message: '权限菜单',
+      data: {
+        list: list,
+        fnList,
+      },
     };
-    const list = await ctx.service.access.list(listData); // 列表
-    const total = await ctx.service.access.total(whereData); // 条数
-
-    console.log('list', list);
-
-    if (list) {
-      const listFormat = list.map(item => {
-        return {
-          ...item,
-          updated_time: moment(item.updated_time).format('YYYY-MM-DD hh:mm:ss'),
-          created_time: moment(item.created_time).format('YYYY-MM-DD hh:mm:ss'),
-        };
-      });
-      ctx.body = {
-        status: 200,
-        message: '获取列表',
-        data: {
-          list: listFormat,
-          total,
-        },
-      };
-    } else {
-      ctx.body = {
-        status: 201,
-        message: '权限-列表不存在',
-      };
-    }
-
-
   }
-
-  // 新增
+  /**
+   * 需求：权限菜单-新增
+   * 1，判断名字是否存在。
+   * 2，判断pid是否存在。
+   * 3，新增
+   */
   async create() {
     const { ctx } = this;
-    const result = await this.app.mysql.get('user', { name: ctx.request.body.name });
-    console.log('result', result);
-    if (result && result.name === ctx.request.body.name) {
+
+    if (!ctx.request.body.name) {
       ctx.body = {
-        status: 201,
-        message: '权限名已存在，请使用其他权限名',
+        status: 501,
+        message: '请输入菜单名称',
+      };
+      return false;
+    }
+    if (!ctx.request.body.pid && ctx.request.body.pid !=0) {
+      ctx.body = {
+        status: 501,
+        message: 'pid不存在',
+      };
+      return false;
+    }
+
+    const list = await this.app.mysql.get('access', {
+      status: 1, // 是否可用
+      name: ctx.request.body.name,
+    });
+    if (list) {
+      ctx.body = {
+        status: 501,
+        message: '菜单名称已经存在，请重新选择菜单名称',
       };
     } else {
-      const id = await ctx.service.access.create(ctx.request.body);
-      ctx.body = {
-        status: 200,
-        message: '权限-新增',
-        data: id,
-      };
+      const result = await this.app.mysql.insert('access', {
+        name: ctx.request.body.name,
+        menuname: ctx.request.body.menuname,
+        path: ctx.request.body.path,
+        pid: ctx.request.body.pid,
+      });
+      if (result) {
+        ctx.body = {
+          status: 200,
+          message: '菜单-新增成功',
+        };
+      } else {
+        ctx.body = {
+          status: 501,
+          message: '数据库错误',
+        };
+      }
+
     }
   }
-
-  // 更新
+  /**
+   * 需求：权限菜单-编辑菜单
+   * 版本号：v1.0.0
+   */
   async update() {
     const { ctx } = this;
-    const id = ctx.params.id;
-    const result = await ctx.service.access.update(Object.assign({ id }, ctx.request.body));
 
-    console.log('result', result);
+    if (!ctx.request.body.id) {
+      ctx.body = {
+        status: 501,
+        message: 'id不存在',
+      };
+      return false;
+    }
 
-    if (result.affectedRows === 1) {
+    if (!ctx.request.body.name) {
+      ctx.body = {
+        status: 501,
+        message: '菜单名称不存在',
+      };
+      return false;
+    }
+
+    const list = await this.app.mysql.update('access', {
+      name: ctx.request.body.name,
+      menuname: ctx.request.body.menuname,
+      path: ctx.request.body.path,
+      id: ctx.request.body.id,
+    });
+
+    if (list.affectedRows === 1) {
       ctx.body = {
         status: 200,
-        message: '权限-编辑成功',
-        data: {
-          id,
-        },
+        message: '更新成功',
       };
     } else {
       ctx.body = {
-        status: 201,
-        message: '权限-编辑失败',
+        status: 501,
+        message: '数据库错误',
       };
     }
-
   }
 
-  // 删除
-  async destroy() {
+  /**
+   * 需求：权限菜单-删除菜单
+   * 版本号：v1.0.0
+   * 逻辑删除
+   * 1，判断id是不是存在，存在让status变成0
+   */
+  async delete() {
     const { ctx } = this;
-    const id = ctx.params.id;
-    const result = await ctx.service.access.destroy({
-      id,
+
+    if (!ctx.request.body.id) {
+      ctx.body = {
+        status: 501,
+        message: 'id不存在',
+      };
+      return false;
+    }
+    const list = await this.app.mysql.update('access', {
+      status: 0, // 是否可用
+      id: ctx.request.body.id,
     });
-    if (result.affectedRows === 1) {
+
+    if (list.affectedRows === 1) {
       ctx.body = {
         status: 200,
-        message: '权限-删除成功',
-        data: {
-          id,
-        },
+        message: '删除成功',
       };
     } else {
       ctx.body = {
-        status: 201,
-        message: '权限-删除失败',
+        status: 501,
+        message: '数据库错误',
       };
     }
+
+
   }
 
   // 批量删除
@@ -171,6 +192,7 @@ class TopicsController extends Controller {
       message: '权限-批量删除正在开发',
     };
   }
+
 }
 
-module.exports = TopicsController;
+module.exports = TestController;

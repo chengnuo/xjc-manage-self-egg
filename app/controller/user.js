@@ -203,7 +203,7 @@ class TopicsController extends Controller {
         // 'username',
       ],
     };
-    const list = await ctx.service.users.setRolesList(listData); // 列表
+    const list = await ctx.service.user.setRolesList(listData); // 列表
     const userRoleList = await this.app.mysql.select('user_role', {
       where: {
         uid: ctx.query.uid,
@@ -240,7 +240,7 @@ class TopicsController extends Controller {
       uid: ctx.request.body[0].uid,
     });
 
-    const list = await ctx.service.users.setRoles(ctx.request.body); // 列表
+    const list = await ctx.service.user.setRoles(ctx.request.body); // 列表
     if (list) {
       ctx.body = {
         status: 200,

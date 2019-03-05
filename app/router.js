@@ -19,9 +19,13 @@ module.exports = app => {
   // 用户模块
   app.router.delete('user', '/api/v1/user', app.controller.user.delete); // 拓展多个删除
   app.router.resources('user', '/api/v1/user', checktoken, app.controller.user); // restful
+  app.router.post('users', '/api/v1/user/setRoles', app.controller.user.setRoles); // 设置角色
+  app.router.get('users', '/api/v1/user/setRolesList', app.controller.user.setRolesList); // 设置角色列表
   // 角色模块
   app.router.delete('role', '/api/v1/role', app.controller.role.delete); // 拓展多个删除
   app.router.resources('role', '/api/v1/role', checktoken, app.controller.role); // restful
+  app.router.post('role', '/api/v1/role/setAccess', app.controller.role.setAccess); // 设置权限
+  app.router.post('role', '/api/v1/role/setAccessList', app.controller.role.setAccessList); // 设置权限列表
   // 权限模块
   app.router.delete('access', '/api/v1/access', app.controller.access.delete); // 拓展多个删除
   app.router.resources('access', '/api/v1/access', checktoken, app.controller.access); // restful
