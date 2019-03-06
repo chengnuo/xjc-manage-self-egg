@@ -58,6 +58,7 @@ module.exports = () => {
       // ctx.status = 401;
       // ctx.body = {
       //   message: '没有token',
+      //   status: 401,
       // };
       // return;
     }

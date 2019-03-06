@@ -38,7 +38,7 @@ class TestController extends Controller {
       where: {
         status: 1, // 是否可用
       },
-      columns: [ 'id', 'pid', 'name', 'url', 'menuname' ],
+      columns: [ 'id', 'pid', 'name', 'url', 'method' ],
     });
     let fnList = fn(list, 0)
 
@@ -87,7 +87,7 @@ class TestController extends Controller {
     } else {
       const result = await this.app.mysql.insert('access', {
         name: ctx.request.body.name,
-        menuname: ctx.request.body.menuname,
+        method: ctx.request.body.method,
         url: ctx.request.body.url,
         pid: ctx.request.body.pid,
       });
@@ -130,7 +130,7 @@ class TestController extends Controller {
 
     const list = await this.app.mysql.update('access', {
       name: ctx.request.body.name,
-      menuname: ctx.request.body.menuname,
+      method: ctx.request.body.method,
       url: ctx.request.body.url,
       id: ctx.request.body.id,
     });
@@ -154,7 +154,7 @@ class TestController extends Controller {
    * 逻辑删除
    * 1，判断id是不是存在，存在让status变成0
    */
-  async delete() {
+  async destroy() {
     const { ctx } = this;
 
     if (!ctx.request.body.id) {

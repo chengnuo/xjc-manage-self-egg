@@ -15,6 +15,7 @@ module.exports = app => {
   // 用户登录/登出
   app.router.post('login', '/api/v1/login/signIn', app.controller.login.signIn); // 登录
   app.router.post('login', '/api/v1/login/signOut', app.controller.login.signOut); // 登出
+  app.router.post('login', '/api/v1/login/getMenuList', app.controller.login.getMenuList); // 登录后获取列表
 
   // 用户模块
   app.router.delete('user', '/api/v1/user', app.controller.user.delete); // 拓展多个删除
