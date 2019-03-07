@@ -5,6 +5,7 @@ module.exports = () => {
   console.log('jwt', jwt);
   // let jwt = app.jwt;
   return async function(ctx, next) {
+    console.log('ctx', ctx);
     console.log('ctx', ctx.url);
     console.log('ctx', ctx.method);
     // console.log('ctx', await ctx.service.login.getMenuList())
@@ -22,11 +23,12 @@ module.exports = () => {
         if (decoded) {
           const getMenuList = await ctx.service.login.getMenuList();
           let result = null;
+          let ctxUrl = ctx.url ? ctx.url.split('?')[0] : ''; // /api/v1/role?pageCurrent=1&pageSize=10
 
           result = (getMenuList.accessMenu || []).filter(item => {
             console.log('item', item.url);
             console.log('item', item.method);
-            if ((item.url === ctx.url) && (item.method === ctx.method)) {
+            if ((item.url === ctxUrl) && (item.method === ctx.method)) {
               return true;
             }
             return false;
