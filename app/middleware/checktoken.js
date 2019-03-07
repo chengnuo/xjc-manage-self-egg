@@ -5,6 +5,9 @@ module.exports = () => {
   console.log('jwt', jwt);
   // let jwt = app.jwt;
   return async function(ctx, next) {
+    console.log('ctx', ctx.url)
+    console.log('ctx', ctx.method)
+
     if (ctx.request.header.authorization) {
       let token = ctx.request.header.authorization.split(' ')[1];
       console.log('token', token);
@@ -54,13 +57,13 @@ module.exports = () => {
       // });
       await next();
     } else {
-      await next(); // 测试阶段，直接通过
-      // ctx.status = 401;
-      // ctx.body = {
-      //   message: '没有token',
-      //   status: 401,
-      // };
-      // return;
+      // await next(); // 测试阶段，直接通过
+      ctx.status = 401;
+      ctx.body = {
+        message: '没有token',
+        status: 401,
+      };
+      return;
     }
   };
 };

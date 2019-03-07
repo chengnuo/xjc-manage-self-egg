@@ -15,7 +15,7 @@ function fn(data, pid) {
       };
       temp = fn(data, data[i].id);
 
-      console.log('temp', temp)
+      // console.log('temp', temp)
 
       if (temp.length > 0) {
         obj.children = temp;

@@ -7,7 +7,7 @@ function accessMenuFn(data, pid) {
   const result = [];
   let temp = [];
   for (let i = 0; i < data.length; i++) {
-    if (data[i].pid == pid) {
+    if (data[i].pid === pid) {
       const obj = {
         ...data[i],
         name: data[i].name,
@@ -16,7 +16,7 @@ function accessMenuFn(data, pid) {
       };
       temp = accessMenuFn(data, data[i].id);
 
-      console.log('temp', temp);
+      // console.log('temp', temp);
 
       if (temp.length > 0) {
         obj.children = temp;
@@ -29,18 +29,6 @@ function accessMenuFn(data, pid) {
 
 // 用户逻辑
 const signInSingle = {
-  // 登录逻辑执行
-  init: (ctx, userInfo, requestBody) => {
-    if (!userInfo) { // 用户不存在
-      ctx.body = signInSingle.notUser();
-      return false;
-    }
-    if (userInfo && userInfo.password === requestBody.password) { // 如果密码一样，登录成功
-      ctx.body = signInSingle.onUser(ctx, userInfo);
-    } else { // 密码错误
-      ctx.body = signInSingle.passwordError();
-    }
-  },
   // 用户不存在
   notUser: () => {
     return {
@@ -50,28 +38,7 @@ const signInSingle = {
   },
   // 用户存在
   onUser: (ctx, userInfo) => {
-    const expiresInTime = 60 * 60 * 1; // 过期时间设置为60妙。那么decode这个token的时候得到的过期时间为 : 创建token的时间 +　设置的值 1小时
-    // 用户存在
-    const token = jwt.sign({ id: userInfo.id }, ctx.app.config.jwt.secret, {
-      expiresIn: expiresInTime,
-    });
-    const result = ctx.app.mysql.update('user',
-      {
-        id: userInfo.id,
-        token: token,
-      });
 
-    ctx.cookies.set('token', token, {
-      maxAge: expiresInTime,
-      httpOnly: false,
-      overwrite: true,
-      signed: false,
-    });
-    return {
-      message: '登录成功',
-      status: 200,
-      token,
-    };
   },
   // 密码错误
   passwordError: () => {
@@ -96,7 +63,42 @@ class HomeController extends Controller {
       username: requestBody.username,
     };
     const userInfo = await this.service.login.signIn(params); // 获取用户信息
-    signInSingle.init(ctx, userInfo, requestBody); // 登录逻辑
+
+    if (!userInfo) { // 用户不存在
+      ctx.body = signInSingle.notUser();
+      return false;
+    }
+    if (userInfo && userInfo.password === requestBody.password) { // 如果密码一样，登录成功
+      const expiresInTime = 60 * 60 * 1; // 过期时间设置为60妙。那么decode这个token的时候得到的过期时间为 : 创建token的时间 +　设置的值 1小时
+      // 用户存在
+      const token = jwt.sign({ id: userInfo.id }, ctx.app.config.jwt.secret, {
+        expiresIn: expiresInTime,
+      });
+      ctx.cookies.set('token', token, {
+        maxAge: expiresInTime,
+        httpOnly: false,
+        overwrite: true,
+        signed: false,
+      });
+      const result = await this.app.mysql.update('user', {
+        id: userInfo.id,
+        token,
+      });
+      if (result.affectedRows === 1) {
+        ctx.body = {
+          message: '登录成功',
+          status: 200,
+          token,
+        };
+      } else {
+        ctx.body = {
+          message: '登录失败',
+          status: 201,
+        };
+      }
+    } else { // 密码错误
+      ctx.body = signInSingle.passwordError();
+    }
   }
 
   /**
@@ -122,8 +124,6 @@ class HomeController extends Controller {
       token: ctx.request.header.authorization.split(' ')[1] || '',
     });
 
-    console.log('userToken', userToken)
-
 
     // 角色
     const resultUserRole = await this.app.mysql.select('user_role', {
@@ -131,8 +131,6 @@ class HomeController extends Controller {
         uid: userToken.id,
       },
     });
-
-    console.log('resultUserRole', resultUserRole);
 
 
     // 过滤
@@ -156,7 +154,6 @@ class HomeController extends Controller {
 
     });
 
-    console.log('filterRoleAccess', filterRoleAccess);
 
     let accessMenu = [];
     let farmatAccessMenu = [];
