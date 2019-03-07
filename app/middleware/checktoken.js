@@ -5,17 +5,46 @@ module.exports = () => {
   console.log('jwt', jwt);
   // let jwt = app.jwt;
   return async function(ctx, next) {
-    console.log('ctx', ctx.url)
-    console.log('ctx', ctx.method)
+    console.log('ctx', ctx.url);
+    console.log('ctx', ctx.method);
+    // console.log('ctx', await ctx.service.login.getMenuList())
 
     if (ctx.request.header.authorization) {
-      let token = ctx.request.header.authorization.split(' ')[1];
+      const token = ctx.request.header.authorization.split(' ')[1];
       console.log('token', token);
       let decoded;
       // 解码token
       try {
         decoded = jwt.verify(token, ctx.app.config.jwt.secret);
+
         console.log('decoded', decoded);
+
+        if (decoded) {
+          const getMenuList = await ctx.service.login.getMenuList();
+          let result = null;
+
+          result = (getMenuList.accessMenu || []).filter(item => {
+            console.log('item', item.url);
+            console.log('item', item.method);
+            if ((item.url === ctx.url) && (item.method === ctx.method)) {
+              return true;
+            }
+            return false;
+          });
+
+          if (result.length > 0) {
+
+          } else {
+            console.log('result1', result);
+            ctx.status = 401;
+            ctx.body = {
+              message: '没有权限',
+              status: 401,
+            };
+            return
+          }
+        }
+
       } catch (error) {
         console.log('error', error);
         if (error.name === 'TokenExpiredError') {
@@ -39,14 +68,14 @@ module.exports = () => {
             status: 401,
           };
           return;
-        } else {
-          ctx.status = 401;
-          ctx.body = {
-            message: 'token失效',
-            status: 401,
-          };
-          return;
         }
+        ctx.status = 401;
+        ctx.body = {
+          message: 'token失效',
+          status: 401,
+        };
+        return;
+
       }
       // 重置cookie时间
       // ctx.cookies.set('token', token, {
