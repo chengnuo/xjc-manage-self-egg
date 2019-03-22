@@ -2,33 +2,31 @@ const jwt = require('jsonwebtoken');
 // app/middleware/checktoken.js
 module.exports = () => {
 
-  console.log('jwt', jwt);
+  // console.log('jwt', jwt);
   // let jwt = app.jwt;
   return async function(ctx, next) {
-    console.log('ctx', ctx);
-    console.log('ctx', ctx.url);
-    console.log('ctx', ctx.method);
+    // console.log('ctx', ctx);
+    // console.log('ctx', ctx.url);
+    // console.log('ctx', ctx.method);
     // console.log('ctx', await ctx.service.login.getMenuList())
 
     if (ctx.request.header.authorization) {
       const token = ctx.request.header.authorization.split(' ')[1];
-      console.log('token', token);
+      // console.log('token', token);
       let decoded;
       // 解码token
       try {
         decoded = jwt.verify(token, ctx.app.config.jwt.secret);
 
-        console.log('decoded', decoded);
+        // console.log('decoded', decoded);
 
         if (decoded) {
           const getMenuList = await ctx.service.login.getMenuList();
           let result = null;
           let ctxUrl = ctx.url ? ctx.url.split('?')[0] : ''; // /api/v1/role?pageCurrent=1&pageSize=10
-
+          // console.log('ctxUrl', ctxUrl)
           result = (getMenuList.accessMenu || []).filter(item => {
-            console.log('item', item.url);
-            console.log('item', item.method);
-            if ((item.url === ctxUrl) && (item.method === ctx.method)) {
+            if ((ctxUrl.includes(item.url)) && (item.method === ctx.method)) {
               return true;
             }
             return false;
@@ -37,7 +35,7 @@ module.exports = () => {
           if (result.length > 0) {
 
           } else {
-            console.log('result1', result);
+            // console.log('result1', result);
             ctx.status = 401;
             ctx.body = {
               message: '没有权限',
@@ -48,7 +46,7 @@ module.exports = () => {
         }
 
       } catch (error) {
-        console.log('error', error);
+        // console.log('error', error);
         if (error.name === 'TokenExpiredError') {
           // console.log('时间到期');
           // 重新发放令牌

@@ -16,7 +16,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1550745880059_4149';
 
   // add your middleware config here
-  config.middleware = [ 'errorHandler' ];
+  config.middleware = [ 'errorHandler', 'printReqRes' ];
   config.errorHandler = {
     match: '/api',
   }
@@ -66,6 +66,7 @@ module.exports = appInfo => {
       'http://localhost:8000',
       '.vquery.com',
       'blog.vquery.com',
+      'http://139.199.221.174:8000',
     ], // security whitelist, starts with '.'
   };
 
