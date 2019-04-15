@@ -33,7 +33,7 @@ const signInSingle = {
   notUser: () => {
     return {
       message: '用户不存在',
-      status: 200,
+      status: 201,
     };
   },
   // 用户存在
