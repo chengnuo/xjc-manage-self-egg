@@ -23,7 +23,7 @@ module.exports = app => {
   app.router.post('users', '/api/v1/user/setRoles', app.controller.user.setRoles); // 设置角色
   app.router.get('users', '/api/v1/user/setRolesList', app.controller.user.setRolesList); // 设置角色列表
   // 角色模块
-  app.router.delete('role', '/api/v1/role', app.controller.role.delete); // 拓展多个删除
+  // app.router.delete('role', '/api/v1/role', app.controller.role.delete); // 拓展多个删除
   app.router.resources('role', '/api/v1/role', checktoken, app.controller.role); // restful
   app.router.post('role', '/api/v1/role/setAccess', app.controller.role.setAccess); // 设置权限
   app.router.post('role', '/api/v1/role/setAccessList', app.controller.role.setAccessList); // 设置权限列表

@@ -52,8 +52,9 @@ class TopicService extends Service {
 
   // 删除
   async destroy(params) {
-    const result = await this.app.mysql.delete('role', {
+    const result = await this.app.mysql.update('role', {
       id: params.id,
+      status: 0,
     });
     return result;
   }

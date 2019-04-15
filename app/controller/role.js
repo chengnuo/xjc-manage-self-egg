@@ -21,7 +21,7 @@ class TopicsController extends Controller {
   // 详情
   async show() {
     const { ctx } = this;
-    const result = await ctx.service.authRole.show({
+    const result = await ctx.service.role.show({
       id: ctx.params.id,
     });
 
@@ -114,7 +114,7 @@ class TopicsController extends Controller {
         message: '角色名已存在，请使用其他角色名',
       };
     } else {
-      const id = await ctx.service.authRole.create(ctx.request.body);
+      const id = await ctx.service.role.create(ctx.request.body);
       ctx.body = {
         status: 200,
         message: '角色-新增',
@@ -127,7 +127,7 @@ class TopicsController extends Controller {
   async update() {
     const { ctx } = this;
     const id = ctx.params.id;
-    const result = await ctx.service.authRole.update(Object.assign({ id }, ctx.request.body));
+    const result = await ctx.service.role.update(Object.assign({ id }, ctx.request.body));
 
     console.log('result', result);
 
@@ -149,12 +149,12 @@ class TopicsController extends Controller {
   }
 
   // 删除
-  async delete() {
+  async destroy() {
     const { ctx } = this;
-    // const id = ctx.params.id;
-    const id = ctx.request.body.id;
+    const id = ctx.params.id;
+    // const id = ctx.request.body.id;
 
-    const result = await ctx.service.authRole.delete({
+    const result = await ctx.service.role.destroy({
       id,
     });
 
