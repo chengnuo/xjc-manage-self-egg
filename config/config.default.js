@@ -64,6 +64,8 @@ module.exports = appInfo => {
     // withCredentials: true,
     domainWhiteList: [
       'http://localhost:8000',
+      'http://localhost:8080',
+      'http://localhost:7001',
       '.vquery.com',
       'blog.vquery.com',
       'http://139.199.221.174:8000',
