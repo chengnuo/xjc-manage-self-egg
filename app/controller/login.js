@@ -161,7 +161,10 @@ class HomeController extends Controller {
 
     if (filterRoleAccess.length > 0) {
       // 7，权限Menu
-      accessMenu = await this.app.mysql.query(`SELECT access.id, access.url, access.method, access.menuname, access.name, access.pid, access.icon FROM access LEFT JOIN role_access ON access.id=role_access.role_id WHERE (${filterRoleAccess.join('')}) group by id`);
+      accessMenu = await this.app.mysql.query(`
+      SELECT access.id, access.url, access.method, access.menuname, access.name, access.pid, access.icon 
+      FROM access 
+      LEFT JOIN role_access ON access.id=role_access.role_id WHERE (${filterRoleAccess.join('')}) group by id`);
       farmatAccessMenu = accessMenuFn(accessMenu, 0);
 
       ctx.body = {
