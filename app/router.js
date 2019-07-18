@@ -30,4 +30,8 @@ module.exports = app => {
   // 权限模块
   app.router.delete('access', '/api/v1/access', app.controller.access.delete); // 拓展多个删除
   app.router.resources('access', '/api/v1/access', checktoken, app.controller.access); // restful
+  // 工具模块 restful
+  app.router.resources('tool', '/api/v1/tool', checktoken, app.controller.tool);
+  // 上传模块
+  app.post('/api/upload', app.controller.upload.upload);
 };
