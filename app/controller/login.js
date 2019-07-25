@@ -172,6 +172,10 @@ class HomeController extends Controller {
         message: '登录菜单',
         accessMenu,
         farmatAccessMenu,
+        userInfo: {
+          id: userToken.id,
+          name: userToken.name,
+        },
       };
     } else {
       ctx.body = {
@@ -179,6 +183,7 @@ class HomeController extends Controller {
         message: '获取菜单失败',
         accessMenu: [],
         farmatAccessMenu: [],
+        userInfo: {},
       };
     }
 

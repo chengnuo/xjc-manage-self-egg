@@ -19,15 +19,15 @@ class TopicService extends Service {
 
   // 详情
   async show(params) {
-    const result = await this.app.mysql.get('tool', { id: params.id });
+    const result = await this.app.mysql.get('plan', { id: params.id });
 
     return result;
   }
 
   // // 列表
   // async list(params) {
-  //   const list = this.app.mysql.select('tool', params);
-  //   // const total = this.app.mysql.count('tool', params);
+  //   const list = this.app.mysql.select('plan', params);
+  //   // const total = this.app.mysql.count('plan', params);
   //   // this.checkSuccess(result);
   //   return list
   // }
@@ -36,9 +36,8 @@ class TopicService extends Service {
     const QUERY_STR = '*';
     const QUERY = `
       SELECT ${QUERY_STR}
-      FROM tool
-      WHERE title
-      LIKE "%${params.title}%" 
+      FROM plan
+      WHERE status=1 AND title LIKE "%${params.title}%"
       LIMIT ${pageCurrent},${pageSize}
     `
     const roleNames = await this.app.mysql.query(QUERY);
@@ -48,16 +47,15 @@ class TopicService extends Service {
   // 条数
   async total(params) {
     console.log('params', params)
-    // const total = this.app.mysql.count('tool', params);
+    // const total = this.app.mysql.count('plan', params);
     // // this.checkSuccess(result);
     // return total
-    const TABLE_NAME = 'tool';
+    const TABLE_NAME = 'plan';
     const sql = `
       SELECT count(*) 
       AS 'total' 
       FROM ${TABLE_NAME} 
-      WHERE title 
-      LIKE "%${params.title}%"
+      WHERE status=1 AND title LIKE "%${params.title}%"
     `;
     const total = await this.app.mysql.query(sql);
     return total[0].total;
@@ -65,23 +63,23 @@ class TopicService extends Service {
 
   // 新增
   async create(params) {
-    const result = await this.app.mysql.insert('tool', params);
+    const result = await this.app.mysql.insert('plan', params);
     return result;
   }
 
   // 更新
   async update(params) {
-    const result = await this.app.mysql.update('tool', params);
+    const result = await this.app.mysql.update('plan', params);
     return result;
   }
 
   // 删除
   async destroy(params) {
-    // const result = await this.app.mysql.delete('tool', {
+    // const result = await this.app.mysql.delete('plan', {
     //   id: params.id,
     // });
     // return result;
-    const result = await this.app.mysql.update('tool', {
+    const result = await this.app.mysql.update('plan', {
       id: params.id,
       status: 0,
     });
