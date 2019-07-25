@@ -24,19 +24,43 @@ class TopicService extends Service {
     return result;
   }
 
-  // 列表
-  async list(params) {
-    const list = this.app.mysql.select('tool', params);
-    // const total = this.app.mysql.count('tool', params);
-    // this.checkSuccess(result);
-    return list
+  // // 列表
+  // async list(params) {
+  //   const list = this.app.mysql.select('tool', params);
+  //   // const total = this.app.mysql.count('tool', params);
+  //   // this.checkSuccess(result);
+  //   return list
+  // }
+  // 列表-模糊搜索
+  async list(params, pageCurrent, pageSize) {
+    const QUERY_STR = '*';
+    const QUERY = `
+      SELECT ${QUERY_STR}
+      FROM tool
+      WHERE title
+      LIKE "%${params.title}%" 
+      LIMIT ${pageCurrent},${pageSize}
+    `
+    const roleNames = await this.app.mysql.query(QUERY);
+    console.log('QUERY', QUERY)
+    return roleNames;
   }
   // 条数
   async total(params) {
     console.log('params', params)
-    const total = this.app.mysql.count('tool', params);
-    // this.checkSuccess(result);
-    return total
+    // const total = this.app.mysql.count('tool', params);
+    // // this.checkSuccess(result);
+    // return total
+    const TABLE_NAME = 'tool';
+    const sql = `
+      SELECT count(*) 
+      AS 'total' 
+      FROM ${TABLE_NAME} 
+      WHERE title 
+      LIKE "%${params.title}%"
+    `;
+    const total = await this.app.mysql.query(sql);
+    return total[0].total;
   }
 
   // 新增
