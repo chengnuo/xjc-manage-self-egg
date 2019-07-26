@@ -33,15 +33,25 @@ class TopicService extends Service {
   // }
   // 列表-模糊搜索
   async list(params, pageCurrent, pageSize) {
-    const QUERY_STR = '*';
-    const QUERY = `
+    // const QUERY_STR = '*';
+    // const QUERY = `
+    //   SELECT ${QUERY_STR}
+    //   FROM plan
+    //   WHERE status=1 AND title LIKE "%${params.title}%"
+    //   LIMIT ${pageCurrent},${pageSize}
+    // `
+    // const roleNames = await this.app.mysql.query(QUERY);
+    // console.log('QUERY', QUERY)
+
+    const QUERY_STR = 'us.id, us.uid, us.title, us.description, us.created_time, us.status, us.plan_state_id, us.dateline, ug.name';
+    const roleNames = await this.app.mysql.query(`
       SELECT ${QUERY_STR}
-      FROM plan
-      WHERE status=1 AND title LIKE "%${params.title}%"
+      FROM plan us
+      LEFT JOIN plan_state ug
+      ON us.plan_state_id = ug.id
+      WHERE us.status=1 AND us.title like "%${params.title}%" 
       LIMIT ${pageCurrent},${pageSize}
-    `
-    const roleNames = await this.app.mysql.query(QUERY);
-    console.log('QUERY', QUERY)
+    `);
     return roleNames;
   }
   // 条数

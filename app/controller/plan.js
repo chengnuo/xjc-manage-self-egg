@@ -114,6 +114,7 @@ class TopicsController extends Controller {
     } else {
       const id = await ctx.service.plan.create(Object.assign({}, ctx.request.body, {
         // uid: ctx.session.user.id, // 从sesstion 里面获取
+        plan_state_id: ctx.request.body.plan_state_id,
       }));
       ctx.body = {
         status: 200,
