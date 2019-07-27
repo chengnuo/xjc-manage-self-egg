@@ -12,3 +12,5 @@ run/
 *.un~
 typings/
 .nyc_output/
+
+app/public/mp3/songs/
