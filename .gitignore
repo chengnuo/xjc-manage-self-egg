@@ -14,3 +14,8 @@ typings/
 .nyc_output/
 
 app/public/mp3/songs/
+
+app/public/mp3/newConceptOne/
+app/public/mp3/newConceptTwo/
+app/public/mp3/newConceptThree/
+app/public/mp3/newConceptFour/
