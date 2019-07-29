@@ -19,15 +19,15 @@ class TopicService extends Service {
 
   // 详情
   async show(params) {
-    const result = await this.app.mysql.get('tool', { id: params.id });
+    const result = await this.app.mysql.get('message', { id: params.id });
 
     return result;
   }
 
   // // 列表
   // async list(params) {
-  //   const list = this.app.mysql.select('tool', params);
-  //   // const total = this.app.mysql.count('tool', params);
+  //   const list = this.app.mysql.select('message', params);
+  //   // const total = this.app.mysql.count('message', params);
   //   // this.checkSuccess(result);
   //   return list
   // }
@@ -36,8 +36,8 @@ class TopicService extends Service {
     const QUERY_STR = '*';
     const QUERY = `
       SELECT ${QUERY_STR}
-      FROM tool
-      WHERE status=1 AND title
+      FROM message
+      WHERE status=1 AND title 
       LIKE "%${params.title}%" 
       LIMIT ${pageCurrent},${pageSize}
     `
@@ -48,10 +48,10 @@ class TopicService extends Service {
   // 条数
   async total(params) {
     console.log('params', params)
-    // const total = this.app.mysql.count('tool', params);
+    // const total = this.app.mysql.count('message', params);
     // // this.checkSuccess(result);
     // return total
-    const TABLE_NAME = 'tool';
+    const TABLE_NAME = 'message';
     const sql = `
       SELECT count(*) 
       AS 'total' 
@@ -65,23 +65,23 @@ class TopicService extends Service {
 
   // 新增
   async create(params) {
-    const result = await this.app.mysql.insert('tool', params);
+    const result = await this.app.mysql.insert('message', params);
     return result;
   }
 
   // 更新
   async update(params) {
-    const result = await this.app.mysql.update('tool', params);
+    const result = await this.app.mysql.update('message', params);
     return result;
   }
 
   // 删除
   async destroy(params) {
-    // const result = await this.app.mysql.delete('tool', {
+    // const result = await this.app.mysql.delete('message', {
     //   id: params.id,
     // });
     // return result;
-    const result = await this.app.mysql.update('tool', {
+    const result = await this.app.mysql.update('message', {
       id: params.id,
       status: 0,
     });

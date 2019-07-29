@@ -36,4 +36,6 @@ module.exports = app => {
   app.post('/api/upload', app.controller.upload.upload);
   // 计划模块 restful
   app.router.resources('plan', '/api/v1/plan', checktoken, app.controller.plan);
+  // 消息模块 restful
+  app.router.resources('message', '/api/v1/message', checktoken, app.controller.message);
 };
