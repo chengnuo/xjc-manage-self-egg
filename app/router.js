@@ -4,7 +4,7 @@
  * @param {Egg.Application} app - egg application
  */
 module.exports = app => {
-  const { router, controller } = app;
+  const { router, controller, io } = app;
   router.get('/', controller.home.index);
   const checktoken = app.middleware.checktoken(); // 查看是否登录
 
@@ -37,5 +37,13 @@ module.exports = app => {
   // 计划模块 restful
   app.router.resources('plan', '/api/v1/plan', checktoken, app.controller.plan);
   // 消息模块 restful
-  app.router.resources('message', '/api/v1/message', checktoken, app.controller.message);
+  // app.router.resources('message', '/api/v1/message', checktoken, app.controller.message);
+  app.router.resources('message', '/api/v1/message', app.controller.message); // TODO，暂时去掉token
+
+  // socket
+  // socket.io
+  io.route('chat', app.io.controller.chat.index);
+
+  // app.io.of('/chat')
+  io.of('/chat').route('chat', app.io.controller.chat.index);
 };

@@ -81,6 +81,21 @@ module.exports = appInfo => {
     // 'withCredentials': true,
   };
 
+  // {app_root}/config/config.${env}.js
+  config.io = {
+    init: {},
+    namespace: {
+      '/': {
+        connectionMiddleware: [ 'connection' ],
+        packetMiddleware: [ 'packet' ],
+      },
+      '/chat': {
+        connectionMiddleware: [ 'connection' ],
+        packetMiddleware: [],
+      },
+    },
+  };
+
 
   return {
     ...config,

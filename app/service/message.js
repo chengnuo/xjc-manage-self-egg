@@ -56,7 +56,7 @@ class TopicService extends Service {
       SELECT count(*) 
       AS 'total' 
       FROM ${TABLE_NAME} 
-      WHERE title 
+      WHERE status=1 AND title 
       LIKE "%${params.title}%"
     `;
     const total = await this.app.mysql.query(sql);

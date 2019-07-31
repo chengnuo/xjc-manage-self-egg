@@ -37,3 +37,9 @@ exports.cors = {
   enable: true,
   package: 'egg-cors',
 };
+
+// {app_root}/config/plugin.js
+exports.io = {
+  enable: true,
+  package: 'egg-socket.io',
+};
