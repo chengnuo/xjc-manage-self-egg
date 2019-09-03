@@ -39,6 +39,8 @@ module.exports = app => {
   // 消息模块 restful
   // app.router.resources('message', '/api/v1/message', checktoken, app.controller.message);
   app.router.resources('message', '/api/v1/message', app.controller.message); // TODO，暂时去掉token
+  // 风险投资 restful
+  app.router.resources('ventureCapital', '/api/v1/ventureCapital', checktoken, app.controller.ventureCapital);
 
   // socket
   // socket.io
